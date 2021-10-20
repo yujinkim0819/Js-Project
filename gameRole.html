@@ -6,15 +6,49 @@
         <style>
             body{
                 margin: 0;
-                background-color: lightskyblue;
+                background-image: url('../img/school.png');
+                background-repeat: no-repeat;
+                background-size: cover;
             }
-            .container {
-                width: 100vw;
-                height: 100wh;
+            p{
+                padding: 35px 330px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            button{
+                width: 250px;
+                height: 60px;
+                border: 5px solid lightskyblue;
+                background-color: rgb(255, 255, 255);
+                color:lightskyblue; 
+                padding: 5px;
+                border-radius: 30px 30px 30px 30px;
+                margin-left: 900px;
             }
         </style>
     </head>
     <body>
-        
+        <p>
+            물고기 세바스찬들은 배가 항상 고픕니다<br>
+            서로서로 많이 먹으려고 속도를 내는데...<br><br>
+
+            그 중 밥을 가장 많이 먹은 세바스찬을 골라주세요<br>
+            기회는 총 3번입니다<br>
+            기회를 다 잃으면 게임오버<br><br>
+
+            게임은 크게 3판으로 구성되어 있으며 1판당 3번씩 돌아갑니다<br>
+            9번을 성공해서 욕심쟁이 세반스찬을 잡아주세요!!<br>
+
+            1판을 끝낼 때 마다 세바스찬이 밥을 먹는 속도는 점점 빨라집니다<br><br>
+            <br><br>
+            키보드를 좌우로 화면에 보이는 손가락을 움직여 세바스찬을 선택할 수 있습니다<br>
+        </p>
+        <!-- 페이지 뒤로 가기 -->
+        <button onclick="goBackPage()"> 뒤로 가기 </button>
+        <script>
+            function goBackPage() {
+                window.history.back();
+            }
+        </script>
     </body>
 </html>
