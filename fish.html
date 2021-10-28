@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <meta charset="utf-8">
+        <meta charset="utf-8">
+        <title>폭식하는 물고기를 찾아라</title>
+        <script src="./play.js" defer></script>
         <style>
             body{
                 background-image:url("../img/water.png");
-                background-color: #D9E5FF;
                 background-size: cover;
             }
         </style>
+    
+
+        <!-- 캔버스 배경 이미지 -->
+        <!--<script type="text/javascript" src="play.js">
+            setBackground();
+        </script>-->
     </head>
-    <body>
+    <body onload="loaded()">
+        <canvas id="mycanvas" width="3820" height="1830" style="border: 3px dotted red;"></canvas>
+
+
+        <!--<script type="text/javascript">
+            var canvas = document.getElementById('mycanvas');
+            var context = canvas.getContext('2d');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            
+            // 새로운 이미지 객체를 만듬
+            let img = new Image();
+            img.onload = function(){
+              context.drawImage(img, 10, 10);
+            }
+            img.src = "../img/fish1.png";
+        </script>-->
+        
+        <!--
         <div>
             <div style="position: absolute;">
                 <div style="position: relative; top: 300px; left: 800px;"><img src="../img/fish1.png"></img></div>
@@ -22,5 +47,6 @@
                 <div style="position: relative; top: 300px; left: 2400px;"><img src="../img/fish3.png"></img></div>
             </div> 
         </div>
+        -->
     </body>
 </html>
