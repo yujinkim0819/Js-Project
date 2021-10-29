@@ -19,6 +19,15 @@ fish2.src="../img/fish2.png";
 let fish3= new Image();
 fish3.src="../img/fish3.png";
 
+// 비눗방울
+bubble1 = new Array();
+for(let i = 0; i<3; i++){
+    bubble1[i] = new Image();
+    bubble1[i].src = "../img/bubble1.png";
+}
+
+
+
 let x = 600, y = 500; // 손 처음 위치
 let hand_w = 40, hand_h = 95; // 손의 크기
 
@@ -47,6 +56,10 @@ function draw(){
     ctx.drawImage(fish1, 290, 100, 193, 301);
     ctx.drawImage(fish2, 520, 100, 193, 301);
     ctx.drawImage(fish3, 750, 100, 193, 301);
+
+    for(let i = 0; i<3; i++){
+        ctx.drawImage(bubble1[i], 1120re + (i*45), 10, 40, 40); // 비눗방울 출력
+    }
 }
 
 function keydown(){
