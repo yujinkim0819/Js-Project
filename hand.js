@@ -26,8 +26,13 @@ for(let i = 0; i<3; i++){
     bubble1[i].src = "../img/bubble1.png";
 }
 
+// 버튼
+let btn = new Image();
+btn.src = "../img/btn.png";
+
 let x = 600, y = 500; // 손 처음 위치
 let hand_w = 40, hand_h = 95; // 손의 크기
+
 
 function movingHand(){
     canvas= document.getElementById('c1');
@@ -35,7 +40,8 @@ function movingHand(){
 
     // playgame 호출
     playgame();
-    setInterval(playgame,10); 
+    setInterval(playgame,30); 
+    click();
 }
 
 function playgame(){
@@ -44,28 +50,31 @@ function playgame(){
 }
 
 function moveHand(){
-    if((x-hand_w) + dx > 0 && x+dx < 1200) // hand 이동 제한
+    if((x-hand_w) + dx > 310 && x+dx < 860) // hand 이동 제한
         x+=dx; // 좌표 이동
 }
 
 function draw(){
+
     ctx.drawImage(water,0,0,1260, 595); // 배경 출력
     ctx.drawImage(hand,x- hand_w,y- hand_h,hand_w*2,hand_h*2); // hand.png 출력
     ctx.drawImage(fish1, 290, 100, 193, 301);
     ctx.drawImage(fish2, 520, 100, 193, 301);
     ctx.drawImage(fish3, 750, 100, 193, 301);
+    ctx.drawImage(btn, 1120, 500, 100, 100);
 
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
     }
 }
 
-// 한 번에 15씩 이동
+
+// 한 번에 20씩 이동
 function keydown(){
     keycode=event.keyCode;
     switch(keycode){
-        case 37: dx = -15; break; // 왼
-        case 39: dx = 15; break; // 오
+        case 37: dx = -50; break; // 왼
+        case 39: dx = 50; break; // 오
     }
 }
 
@@ -73,6 +82,21 @@ function keyup(){
     keycode=event.keyCode;
     switch(keycode){
         case 37: // 왼
-        case 39: dx=0; break; // 온
+        case 39: dx=0; break; // 오
     }
+}
+
+function goBackPage() {
+    window.history.back();
+}
+
+// canvas 좌표 클릭 위치
+function click() {
+    canvas.onclick = function(event){
+        const x = event.clientX - ctx.canvas.offsetLeft; 
+        const y = event.clientY - ctx.canvas.offsetTop;
+        if(x > 1120 && y > 500){
+            goBackPage();
+        }
+    } 
 }

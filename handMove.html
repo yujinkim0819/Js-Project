@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <script src="./hand.js" defer></script>
-    <style>
-    body{
-        background-image:url("../img/water.png");
-        background-size: cover;
-    }
-    </style>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <script src="./hand.js" defer></script>
+        <style>
+        body{
+            background-image:url("../img/water.png");
+            background-size: cover;
+        }
+        button{
+            width: 120px;
+            height: 40px;
+            border: 5px solid lightskyblue;
+            background-color: rgb(255, 255, 255);
+            color:lightskyblue; 
+            padding: 5px;
+            border-radius: 30px 30px 30px 30px;
+            margin-left: 1125px;
+        }
+        </style>
+    </head>
 <body onload="movingHand()" onkeydown="keydown()" onkeyup="keyup()" >
-    <!--<canvas width="1260" height="595" style="border: 2px dotted red;" id="c1"></canvas>-->
-    <canvas width="1260" height="595;" id="c1"></canvas>
+    <canvas id="c1" width="1270" height="595;"></canvas>
 </body>
 </html>
