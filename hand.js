@@ -40,7 +40,7 @@ function movingHand(){
 
     // playgame 호출
     playgame();
-    setInterval(playgame,30); 
+    setInterval(playgame,100); 
     click();
 }
 
@@ -73,8 +73,8 @@ function draw(){
 function keydown(){
     keycode=event.keyCode;
     switch(keycode){
-        case 37: dx = -50; break; // 왼
-        case 39: dx = 50; break; // 오
+        case 37: dx = -230; break; // 왼
+        case 39: dx = 230; break; // 오
     }
 }
 
@@ -95,7 +95,7 @@ function click() {
     canvas.onclick = function(event){
         const x = event.clientX - ctx.canvas.offsetLeft; 
         const y = event.clientY - ctx.canvas.offsetTop;
-        if(x > 1120 && y > 500){
+        if(x > 860 && y > 330){
             goBackPage();
         }
     } 
