@@ -1,10 +1,11 @@
 "use strcik"
 
-let canvas;
-let ctx; //화가 객체
-let dx=0; // 이동 좌표
+let dx = 0; // x의 이동 좌표
 let keycode; // 키보드 입력 변수
- 
+let nowX = 0; // 현재 이동한 x좌표 
+let x = 600, y = 500; // 손 처음 위치
+let hand_w = 40, hand_h = 95; // 손의 크기
+
 // 배경, 손 객체 생성
 let water= new Image();
 water.src="../img/water.png";
@@ -30,18 +31,20 @@ for(let i = 0; i<3; i++){
 let btn = new Image();
 btn.src = "../img/btn.png";
 
-let x = 600, y = 500; // 손 처음 위치
-let hand_w = 40, hand_h = 95; // 손의 크기
 
+// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
+let leaf = new Image();
+leaf.src = "../img/leaf.png"
+
+let canvas= document.getElementById('c1');
+let ctx= canvas.getContext('2d'); // 화가 객체
 
 function movingHand(){
-    canvas= document.getElementById('c1');
-    ctx= canvas.getContext('2d');
-
     // playgame 호출
     playgame();
     setInterval(playgame,100); 
     click();
+    keychg();
 }
 
 function playgame(){
@@ -55,7 +58,6 @@ function moveHand(){
 }
 
 function draw(){
-
     ctx.drawImage(water,0,0,1260, 595); // 배경 출력
     ctx.drawImage(hand,x- hand_w,y- hand_h,hand_w*2,hand_h*2); // hand.png 출력
     ctx.drawImage(fish1, 290, 100, 193, 301);
@@ -73,8 +75,8 @@ function draw(){
 function keydown(){
     keycode=event.keyCode;
     switch(keycode){
-        case 37: dx = -230; break; // 왼
-        case 39: dx = 230; break; // 오
+        case 37: dx = -230; nowX = dx; break; // 왼
+        case 39: dx = 230; nowX = dx; break; // 오
     }
 }
 
@@ -100,3 +102,25 @@ function click() {
         }
     } 
 }
+
+/*
+// 깜짝 놀란 물고기
+let supfish = new Image();
+supfish.src = "../img/surprised.png";
+/*function drawch() {
+    ctx.drawImage(supfish, 290, 100, 193, 301);
+}*/
+
+/*
+// 물고기 선택
+function keychg(){
+    keycode=event.keyCode;
+    if(keycode == 13){ // Enter
+        //if(nowX >= 310 && nowX <= 410){ // 맨 오른쪽 물고기의 좌표
+        if((x-hand_w) + dx > 310 && x+dx < 860){
+            // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
+            ctx.drawImage(supfish, 290, 100, 193, 301);
+        } 
+    }
+}
+*/
