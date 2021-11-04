@@ -34,7 +34,7 @@ btn.src = "../img/btn.png";
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
 let leaf = new Image();
-leaf.src = "../img/leaf.png"
+leaf.src = "../img/leaf.png";
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -50,12 +50,14 @@ function movingHand(){
 function playgame(){
     moveHand(); //캐릭터 움직이기
     draw(); // 이미지들 그리기
+    
 }
 
 function moveHand(){
     if((x-hand_w) + dx > 310 && x+dx < 860) // hand 이동 제한
         x+=dx; // 좌표 이동
 }
+
 
 function draw(){
     ctx.drawImage(water,0,0,1260, 595); // 배경 출력
@@ -64,11 +66,21 @@ function draw(){
     ctx.drawImage(fish2, 520, 100, 193, 301);
     ctx.drawImage(fish3, 750, 100, 193, 301);
     ctx.drawImage(btn, 1120, 500, 100, 100);
-
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
     }
+    //addToCanvas(ctv, "../img/leaf.png", 30, 30, 40, 40);
+    //ctx.drawImage(leaf, 1020, 170, 80, 60);
 }
+
+// 캔버스에 이미지 추가
+function addToCanvas(ctx, image, x, y, sizex, sizey) {
+  let img = new Image;
+  img.src = image;
+  img.onload = function() {
+    ctx.drawImage(img, x, y, sizex, sizey);
+  };
+};
 
 
 // 한 번에 20씩 이동
@@ -102,6 +114,8 @@ function click() {
         }
     } 
 }
+
+
 
 /*
 // 깜짝 놀란 물고기
