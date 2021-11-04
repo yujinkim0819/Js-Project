@@ -49,8 +49,7 @@ function movingHand(){
 
 function playgame(){
     moveHand(); //캐릭터 움직이기
-    draw(); // 이미지들 그리기
-    
+    draw(); // 이미지들 그리기    
 }
 
 function moveHand(){
@@ -69,9 +68,9 @@ function draw(){
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
     }
-    //addToCanvas(ctv, "../img/leaf.png", 30, 30, 40, 40);
     //ctx.drawImage(leaf, 1020, 170, 80, 60);
 }
+
 
 // 캔버스에 이미지 추가
 function addToCanvas(ctx, image, x, y, sizex, sizey) {
@@ -89,6 +88,7 @@ function keydown(){
     switch(keycode){
         case 37: dx = -230; nowX = dx; break; // 왼
         case 39: dx = 230; nowX = dx; break; // 오
+        //case 13: ChangeImg(); -> 이미지 바꾸기 
     }
 }
 
@@ -99,6 +99,7 @@ function keyup(){
         case 39: dx=0; break; // 오
     }
 }
+    
 
 function goBackPage() {
     window.history.back();
@@ -117,16 +118,17 @@ function click() {
 
 
 
-/*
-// 깜짝 놀란 물고기
-let supfish = new Image();
-supfish.src = "../img/surprised.png";
-/*function drawch() {
-    ctx.drawImage(supfish, 290, 100, 193, 301);
-}*/
 
-/*
+// 깜짝 놀란 물고기
+/*let supfish = new Image();
+supfish.src = "../img/surprised.png";
+function drawch() {
+    ctx.drawImage(supfish, 290, 100, 193, 301);
+}
+*/
+
 // 물고기 선택
+/*
 function keychg(){
     keycode=event.keyCode;
     if(keycode == 13){ // Enter
@@ -138,3 +140,16 @@ function keychg(){
     }
 }
 */
+
+
+// 이미지 변경
+function ChangeImg(){
+    document.getElementById("imgId").src = "surprised.png";
+}
+
+
+// 현재 레벨이 3일 경우 : 제공하는 힌트
+function hint() {
+    addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
+}
+

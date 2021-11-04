@@ -1,31 +1,16 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <script type="text/javascript">
-        var imgArray = new Array();
-        imgArray[0]="../img/bubble1.png";
-        imgArray[1]="../img/bubble2.png";
-        imgArray[2]="../img/bubble3.png";
+<meta charset="utf-8">
+<title>Insert title here</title>
+<script type="text/javascript">
  
-        function showImage() {
-            
-            var imgNum = 0;
-            
-            var objImg = document.getElementById("introImg");
-            objImg.src = imgArray[imgNum];
- 
-            setTimeout("showImage()", 250);
-            imgNum++;
-            if(imgNum == 2){
-                imgNum = 0;
-            }
-        }
- 
-        
-    </script>
+function ChangeImg(){
+    document.getElementById("imgId").src = "../img/hand.png";
+}
+</script>
 </head>
-<body onload="showImage()">
-        <img id="introImg" border="0">
+<body>
+<div onclick="ChangeImg()">커피이미지</div>
+<img id="imgId" src="../img/leaf.png">
 </body>
 </html>
