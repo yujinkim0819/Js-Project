@@ -45,6 +45,8 @@ function movingHand(){
     setInterval(playgame,100); 
     click();
     keychg();
+
+    fishMove();
 }
 
 function playgame(){
@@ -153,3 +155,43 @@ function hint() {
     addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
 }
 
+//--------------------------------------
+
+
+let n=Math.floor(Math.random()*6)+5;    //변경횟수변수 
+
+//먹는 물고기 이미지
+let eatfish= new Image();
+eatfish.src="../img/eatfish.png";
+let eatfish2= new Image();
+eatfish2.src="../img/eatfish2.png"; 
+
+function fishMove(){ //물고기 움직이는 이미지
+    for(let i=0; i<n; i++){
+        let imgNum=Math.floor(Math.random()*3);
+        eatImg();
+        setTimeout(()=>eatImg(imgNum), 700 * i)
+        reImg();
+        setTimeout(()=>reImg(imgNum), 1200 * i)    
+    }
+} 
+
+function eatImg(){  //먹는 이미지로 변경
+    if(imgNum==0){
+        ctx.drawImage(eatfish, 290, 100, 193, 301);
+    }else if(imgNum==1){
+        ctx.drawImage(eatfish2, 520, 100, 193, 301);
+    }else if(imgNum==2){
+        ctx.drawImage(eatfish, 750, 100, 193, 301);
+    }
+}  
+
+function reImg(){  //기본 이미지로 변경
+    if(imgNum == 0){
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+    }else if(imgNum == 1){
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+    }else if(imgNum == 2){
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+    } 
+}
