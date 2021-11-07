@@ -43,10 +43,9 @@ function movingHand(){
     // playgame 호출
     playgame();
     setInterval(playgame,100); 
-    click();
     keychg();
-
     fishMove();
+    click();
 }
 
 function playgame(){
@@ -157,41 +156,56 @@ function hint() {
 
 //--------------------------------------
 
+let n=Math.floor(Math.random()*6)+5;    //변경횟수변수
 
-let n=Math.floor(Math.random()*6)+5;    //변경횟수변수 
-
-//먹는 물고기 이미지
+// 먹는 물고기 객체 생성
 let eatfish= new Image();
 eatfish.src="../img/eatfish.png";
 let eatfish2= new Image();
-eatfish2.src="../img/eatfish2.png"; 
+eatfish2.src="../img/eatfish2.png";
 
-function fishMove(){ //물고기 움직이는 이미지
-    for(let i=0; i<n; i++){
-        let imgNum=Math.floor(Math.random()*3);
-        eatImg();
-        setTimeout(()=>eatImg(imgNum), 700 * i)
-        reImg();
-        setTimeout(()=>reImg(imgNum), 1200 * i)    
+//밥먹는 횟수 저장 배열
+let sum=new Array(3);
+sum=[0, 0, 0];
+
+function fishMove(){        //물고기 이미지 바꾸기
+    let i, j, maxIndex=0;
+    for(i=0; i<n; i++){
+        let imgNum=Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
+        eatImg();
+        setTimeout(()=>eatImg(imgNum),700*i)
+        reImg();
+        setTimeout(()=>reImg(imgNum),1200*i)
+        if(imgNum==0) {sum[0]++;}                   
+        else if (imgNum==1) {sum[1]++; }
+        else if (imgNum==2) {sum[2]++; }
     }
-} 
+    max=sum[0];
+    for(j=0; j<sum.length; j++){    //가장 많이 먹은 물고기 방번호
+        if(sum[j]>max){
+            max=sum[j];
+            maxIndex=j;
+        }
+    }
+    alert(maxIndex);	//몇번방인지 확인하기 위해
+}
 
-function eatImg(){  //먹는 이미지로 변경
-    if(imgNum==0){
-        ctx.drawImage(eatfish, 290, 100, 193, 301);
-    }else if(imgNum==1){
-        ctx.drawImage(eatfish2, 520, 100, 193, 301);
-    }else if(imgNum==2){
-        ctx.drawImage(eatfish, 750, 100, 193, 301);
-    }
-}  
+function eatImg(imgNum){        //먹는 이미지로 변경
+    if(imgNum==0){
+        ctx.drawImage(eatfish, 290, 100, 193, 301);
+    }else if(imgNum==1){
+        ctx.drawImage(eatfish2, 520, 100, 193, 301);
+    }else if(imgNum==2){
+        ctx.drawImage(eatfish, 750, 100, 193, 301);
+    }
+}
+function reImg(imgNum){         //기본 이미지로 변경
+    if(imgNum==0){
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+    }else if(imgNum==1){
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+    }else if(imgNum==2){
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+    }
 
-function reImg(){  //기본 이미지로 변경
-    if(imgNum == 0){
-        ctx.drawImage(fish1, 290, 100, 193, 301);
-    }else if(imgNum == 1){
-        ctx.drawImage(fish2, 520, 100, 193, 301);
-    }else if(imgNum == 2){
-        ctx.drawImage(fish3, 750, 100, 193, 301);
-    } 
 }
