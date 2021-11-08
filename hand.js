@@ -41,8 +41,10 @@ let ctx= canvas.getContext('2d'); // 화가 객체
 function movingHand(){
     // playgame 호출
     playgame();
-    setInterval(playgame,100); 
-    fishMove();
+    setInterval(playgame,100);
+    setTimeout(() => {
+        fishMove();
+    }, 1500);
     click();
 }
 
@@ -169,14 +171,14 @@ sum=[0, 0, 0];
 function fishMove(){    //물고기 이미지 바꾸기
     let i, j, maxIndex=0;
     for(i=0; i<n; i++){
-        let imgNum=Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
+        let imgNum = Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
         eatImg();
         setTimeout(()=>eatImg(imgNum),700*i)
         reImg();
         setTimeout(()=>reImg(imgNum),1100*i)
         if(imgNum==0) {sum[0]++;}                   
-        else if (imgNum==1) {sum[1]++; }
-        else if (imgNum==2) {sum[2]++; }
+        else if (imgNum==1) { sum[1]++; }
+        else if (imgNum==2) { sum[2]++; }
     }
     max=sum[0];
     for(j=0; j<sum.length; j++){        //가장 많이 먹은 물고기 방번호
