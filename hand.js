@@ -1,5 +1,4 @@
 "use strcik"
-
 let dx = 0; // x의 이동 좌표
 let keycode; // 키보드 입력 변수
 let nowX = 0; // 현재 이동한 x좌표 
@@ -43,7 +42,6 @@ function movingHand(){
     // playgame 호출
     playgame();
     setInterval(playgame,100); 
-    keychg();
     fishMove();
     click();
 }
@@ -168,26 +166,25 @@ eatfish2.src="../img/eatfish2.png";
 let sum=new Array(3);
 sum=[0, 0, 0];
 
-function fishMove(){        //물고기 이미지 바꾸기
+function fishMove(){    //물고기 이미지 바꾸기
     let i, j, maxIndex=0;
     for(i=0; i<n; i++){
         let imgNum=Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
         eatImg();
         setTimeout(()=>eatImg(imgNum),700*i)
         reImg();
-        setTimeout(()=>reImg(imgNum),1200*i)
+        setTimeout(()=>reImg(imgNum),1100*i)
         if(imgNum==0) {sum[0]++;}                   
         else if (imgNum==1) {sum[1]++; }
         else if (imgNum==2) {sum[2]++; }
     }
     max=sum[0];
-    for(j=0; j<sum.length; j++){    //가장 많이 먹은 물고기 방번호
+    for(j=0; j<sum.length; j++){        //가장 많이 먹은 물고기 방번호
         if(sum[j]>max){
             max=sum[j];
             maxIndex=j;
         }
     }
-    alert(maxIndex);	//몇번방인지 확인하기 위해
 }
 
 function eatImg(imgNum){        //먹는 이미지로 변경
