@@ -44,7 +44,7 @@ function movingHand(){
     setInterval(playgame,100);
     setTimeout(() => {
         fishMove();
-    }, 1500);
+    }, 1000);
     click();
 }
 
