@@ -39,7 +39,6 @@ let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
 
 function movingHand(){
-    // playgame 호출
     playgame();
     setInterval(playgame,100);
     setTimeout(() => {
@@ -69,7 +68,6 @@ function draw(){
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
     }
-    //ctx.drawImage(leaf, 1020, 170, 80, 60);
 }
 
 
@@ -89,7 +87,7 @@ function keydown(){
     switch(keycode){
         case 37: dx = -230; nowX = dx; break; // 왼
         case 39: dx = 230; nowX = dx; break; // 오
-        //case 13: ChangeImg(); -> 이미지 바꾸기 
+        case 13: if(eating == 0){ keychg(); } break;
     }
 }
 
@@ -117,46 +115,38 @@ function click() {
     } 
 }
 
-
-
-
-// 깜짝 놀란 물고기
-/*let supfish = new Image();
-supfish.src = "../img/surprised.png";
-function drawch() {
-    ctx.drawImage(supfish, 290, 100, 193, 301);
-}
-*/
-
-// 물고기 선택
-/*
-function keychg(){
-    keycode=event.keyCode;
-    if(keycode == 13){ // Enter
-        //if(nowX >= 310 && nowX <= 410){ // 맨 오른쪽 물고기의 좌표
-        if((x-hand_w) + dx > 310 && x+dx < 860){
-            // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
-            ctx.drawImage(supfish, 290, 100, 193, 301);
-        } 
-    }
-}
-*/
-
-
-// 이미지 변경
-function ChangeImg(){
-    document.getElementById("imgId").src = "surprised.png";
-}
-
-
 // 현재 레벨이 3일 경우 : 제공하는 힌트
 function hint() {
     addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
 }
 
-//--------------------------------------
 
-let n=Math.floor(Math.random()*6)+5;    //변경횟수변수
+// ------------- 깜짝 놀란 물고기 -------------------
+let supfish = new Image();
+supfish.src = "../img/surprised.png";
+
+let chk = 0;
+function keychg(){
+    // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
+    if((x-hand_w) + dx > 310 && x+dx < 520){
+        chk = setInterval(() => { ctx.drawImage(supfish, 272, 100, 212, 301); });        
+    } else if((x-hand_w) + dx > 520 && x+dx < 750){
+        chk = setInterval(() => { ctx.drawImage(supfish, 502, 100, 212, 301); });     
+    } else {
+        chk = setInterval(() => { ctx.drawImage(supfish, 732, 100, 212, 301); });
+    }
+
+    // 깜짝 놀란 물고기에서 기본 이미지로
+    setTimeout(() => {
+        clearInterval(chk);
+    }, 800);
+}
+
+
+// --------- 먹고 돌아오는 반복 -----------------
+
+let eating = 0;
+let n = Math.floor(Math.random()*6)+5;    //변경횟수변수
 
 // 먹는 물고기 객체 생성
 let eatfish= new Image();
@@ -165,26 +155,27 @@ let eatfish2= new Image();
 eatfish2.src="../img/eatfish2.png";
 
 //밥먹는 횟수 저장 배열
-let sum=new Array(3);
-sum=[0, 0, 0];
+let sum = new Array(3);
+sum = [0, 0, 0];
 
 function fishMove(){    //물고기 이미지 바꾸기
     let i, j, maxIndex=0;
+    //eating = 1;
     for(i=0; i<n; i++){
         let imgNum = Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
         eatImg();
-        setTimeout(()=>eatImg(imgNum),700*i)
+        setTimeout(()=>eatImg(imgNum), 800 * i) // 먹는 초
         reImg();
-        setTimeout(()=>reImg(imgNum),1100*i)
+        setTimeout(()=>reImg(imgNum), 1100 * i) // 기본으로 돌아옴
         if(imgNum==0) {sum[0]++;}                   
-        else if (imgNum==1) { sum[1]++; }
-        else if (imgNum==2) { sum[2]++; }
+        else if (imgNum == 1) { sum[1]++; }
+        else if (imgNum == 2) { sum[2]++; }
     }
-    max=sum[0];
+    max = sum[0];
     for(j=0; j<sum.length; j++){        //가장 많이 먹은 물고기 방번호
-        if(sum[j]>max){
-            max=sum[j];
-            maxIndex=j;
+        if(sum[j] > max){
+            max = sum[j];
+            maxIndex = j;
         }
     }
 }
@@ -198,6 +189,7 @@ function eatImg(imgNum){        //먹는 이미지로 변경
         ctx.drawImage(eatfish, 750, 100, 193, 301);
     }
 }
+
 function reImg(imgNum){         //기본 이미지로 변경
     if(imgNum==0){
         ctx.drawImage(fish1, 290, 100, 193, 301);
@@ -206,5 +198,11 @@ function reImg(imgNum){         //기본 이미지로 변경
     }else if(imgNum==2){
         ctx.drawImage(fish3, 750, 100, 193, 301);
     }
+}
 
+
+function reset() {
+    if(eating == 1){
+        eating = 0;
+    }
 }
