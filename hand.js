@@ -45,7 +45,7 @@ function movingHand(){
     gameStart()
     setTimeout(() => {
         fishMove();
-    }, 1500);
+    }, 1400);
     click();
 }
 
@@ -162,16 +162,21 @@ sum = [0, 0, 0];
 
 function fishMove(){    //물고기 이미지 바꾸기
     let i, j, maxIndex=0;
-    //eating = 1;
     for(i=0; i<n; i++){
+        eating = 1;
         let imgNum = Math.floor(Math.random()*3);     //바뀔 물고기 번호 랜덤값 생성
         eatImg();
         setTimeout(()=>eatImg(imgNum), 800 * i) // 먹는 초
         reImg();
         setTimeout(()=>reImg(imgNum), 1100 * i) // 기본으로 돌아옴
-        if(imgNum==0) {sum[0]++;}                   
-        else if (imgNum == 1) { sum[1]++; }
-        else if (imgNum == 2) { sum[2]++; }
+        
+        if(imgNum == 0) {
+            sum[0]++; 
+        } else if (imgNum == 1) {
+            sum[1]++;
+        } else if (imgNum == 2) {
+            sum[2]++;
+        }
     }
     max = sum[0];
     for(j=0; j<sum.length; j++){        //가장 많이 먹은 물고기 방번호
@@ -211,12 +216,6 @@ function reset() {
 
 
 // ---------------- 게임 start ------------------
-function start(ctx) {
-    ctx.font = "bold 100px sans-serif"; // "스타일 폰트크기 폰트"
-    ctx.fillStyle = "#C5EFFF";
-    ctx.fillText("게임 시작", 400, 200); // fillText(텍스트, x, y)
-}
-
 function gameStart() {
     let start = setInterval(() => {
         //font = "스타일 폰트크기 폰트"
@@ -224,9 +223,9 @@ function gameStart() {
         //fillStyle : 텍스트 배경색
         ctx.fillStyle = "#C5EFFF";
         //fillText(텍스트, x, y)
-        ctx.fillText("게임 시작", 400,200);
+        ctx.fillText("게임 시작", 400, 200);
     });
     setTimeout(() => {
         clearInterval(start);
-    }, 800); 
+    }, 900); 
 }
