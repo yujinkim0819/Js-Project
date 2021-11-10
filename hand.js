@@ -41,9 +41,11 @@ let ctx= canvas.getContext('2d'); // 화가 객체
 function movingHand(){
     playgame();
     setInterval(playgame,100);
+    // 게임 시작 문구
+    gameStart()
     setTimeout(() => {
         fishMove();
-    }, 1000);
+    }, 1500);
     click();
 }
 
@@ -139,7 +141,7 @@ function keychg(){
     // 깜짝 놀란 물고기에서 기본 이미지로
     setTimeout(() => {
         clearInterval(chk);
-    }, 800);
+    }, 800);   
 }
 
 
@@ -205,4 +207,26 @@ function reset() {
     if(eating == 1){
         eating = 0;
     }
+}
+
+
+// ---------------- 게임 start ------------------
+function start(ctx) {
+    ctx.font = "bold 100px sans-serif"; // "스타일 폰트크기 폰트"
+    ctx.fillStyle = "#C5EFFF";
+    ctx.fillText("게임 시작", 400, 200); // fillText(텍스트, x, y)
+}
+
+function gameStart() {
+    let start = setInterval(() => {
+        //font = "스타일 폰트크기 폰트"
+        ctx.font = "bold 100px sans-serif";
+        //fillStyle : 텍스트 배경색
+        ctx.fillStyle = "#C5EFFF";
+        //fillText(텍스트, x, y)
+        ctx.fillText("게임 시작", 400,200);
+    });
+    setTimeout(() => {
+        clearInterval(start);
+    }, 800); 
 }
