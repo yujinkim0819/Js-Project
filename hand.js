@@ -235,21 +235,28 @@ function print() {
 
 // ------------ 클리어 하거나 게임오버까지 진행 ------------
 function replay() {
-    let str = new Date();
+    let str;
     setTimeout(() => {
+        str = new Date();
         fishMove();
+        let end = new Date();
+        let chgTime = end - str;
     }, 1400); // 1.4 초 뒤에 시작해라
-    let end = new Date();
     
-    let chgTime = end - str;
-
     // 물고기 이미지가 바뀌는 시간을 계산해서 그 시간이 지나면 변수를 다시 초기화
     let chg = setTimeout(() => {
         eating = 0;
+        let choice = setInterval(() => { // 선택하세요 문구
+            ctx.font = "bold 100px sans-serif"; 
+            ctx.fillStyle = "#C5EFFF"; 
+            ctx.fillText("선택하세요", 300, 200); 
+        });
+        
         if(eating == 0){
             clearTimeout(chg);
+            setTimeout(() => {
+                clearInterval(choice);
+            }, 1000);
         }
-    }, chgTime); // 여기
-    
-
+    }, 9000); // 여기,, 비동기적 or 물고기를 선택하세요
 }
