@@ -49,7 +49,10 @@ function movingHand(){
 
 function playgame(){
     moveHand(); //캐릭터 움직이기
-    draw(); // 이미지들 그리기    
+    draw(); // 이미지들 그리기   
+    
+    // 물고기 당 밥 먹은 개수
+    print(); 
 }
 
 function moveHand(){
@@ -68,6 +71,11 @@ function draw(){
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
     }
+
+    // 몇 번 째 경기인지 
+    ctx.font = "bold 30px sans-serif"; 
+    ctx.fillStyle = "#C5EFFF"; 
+    ctx.fillText("th", 20, 30); 
 }
 
 
@@ -235,9 +243,11 @@ function gameStart() {
 
 // ------------------ 가장 많이 먹은 물고기 -------------------
 function print() {
-    ctx.font = "bold 30px sans-serif"; 
-    ctx.fillStyle = "#C5EFFF"; 
-    ctx.fillText(maxIndex, 30, 30); 
+    for(let i=0; i<3; i++){
+        ctx.font = "bold 30px sans-serif"; 
+        ctx.fillStyle = "#C5EFFF"; 
+        ctx.fillText(sum[i], 150 + ((i+1)*230), 90); // 간격 수정
+    }
 }
 
 // -------------- 클리어 하거나 게임오버까지 진행 ----------------
@@ -266,9 +276,14 @@ function replay() {
 
 // --------- 많이 먹은 물고기 공개 ------------
 function maxEatFish() {
-    ctx.font = "bold 100px sans-serif"; 
+    for(let i=0; i<3; i++){
+        ctx.font = "bold 30px sans-serif"; 
+        ctx.fillStyle = "#C5EFFF"; 
+        ctx.fillText(maxIndex , 210, 200);
+    }
+    /*ctx.font = "bold 100px sans-serif"; 
     ctx.fillStyle = "#C5EFFF"; 
-    ctx.fillText("세바스찬" + (maxIndex + 1) + " 세", 210, 200); 
+    ctx.fillText("세바스찬" + (maxIndex + 1) + " 세", 210, 200); */
 }
 
 // --------------- 초기화 ---------------------
