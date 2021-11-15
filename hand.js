@@ -177,7 +177,7 @@ sum = [0, 0, 0];
 function fishMove(){    //물고기 이미지 바꾸기
     let i, j;
     
-    for(i=0; i<n; i++){
+    for(i=1; i<=n; i++){
         eating = 1;
         let imgNum = Math.floor(Math.random()*3); //바뀔 물고기 번호 랜덤값 생성
         let eatSpeed = 800;
@@ -290,5 +290,3 @@ function maxEatFish() {
 function reset() {
     
 }
-
-// 물고기 변경과 머ㅓㄱ는 횟수
