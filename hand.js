@@ -290,3 +290,5 @@ function maxEatFish() {
 function reset() {
     
 }
+
+// 물고기 변경과 머ㅓㄱ는 횟수
