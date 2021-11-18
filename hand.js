@@ -6,12 +6,17 @@ let nowX = 0; // 현재 이동한 x좌표
 let x = 600, y = 500; // 손 처음 위치
 let hand_w = 40, hand_h = 95; // 손의 크기
 let th = 1; // 몇 번째 판
+let chghand = 0; // 기본, 정답, 오답 -> 손
 
 // 배경, 손 객체 생성
 let water= new Image();
 water.src="../img/water.png";
 let hand= new Image();
 hand.src="../img/hand.png";
+let goodhand= new Image();
+goodhand.src="../img/good.png";
+let badhand= new Image();
+badhand.src="../img/bad.png";
 
 // 물고기 객체 생성
 let fish1= new Image();
@@ -22,11 +27,9 @@ let fish3= new Image();
 fish3.src="../img/fish3.png";
 
 // 비눗방울
-bubble1 = new Array();
-for(let i = 0; i<3; i++){
-    bubble1[i] = new Image();
-    bubble1[i].src = "../img/bubble1.png";
-}
+let bubble1 = new Image();
+bubble1.src = "../img/bubble1.png";
+let bubble = 3; // 감소 개수 
 
 // 버튼
 let btn = new Image();
@@ -49,7 +52,7 @@ function movingHand(){
     click();
 
     // 테스트
-    checkFish();
+    //checkFish(); 필요없는 듯
 }
 
 function playgame(){
@@ -57,7 +60,7 @@ function playgame(){
     draw(); // 이미지들 그리기   
     
     // 물고기 당 밥 먹은 개수
-    print(); 
+    // print(); 테스트 용도 
 }
 
 function moveHand(){
@@ -68,21 +71,30 @@ function moveHand(){
 
 function draw(){
     ctx.drawImage(water,0,0,1260, 595); // 배경 출력
-    ctx.drawImage(hand,x- hand_w,y- hand_h,hand_w*2,hand_h*2); // hand.png 출력
+    if(chghand == 0) {
+        ctx.drawImage(hand, x- hand_w, y- hand_h, hand_w*2, hand_h*2); // hand.png 출력
+    } else if(chghand == 1){ //손 바꾸기
+        ctx.drawImage(goodhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
+    } else if(chghand == 2){ 
+        ctx.drawImage(badhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
+    } 
     ctx.drawImage(fish1, 290, 100, 193, 301);
     ctx.drawImage(fish2, 520, 100, 193, 301);
     ctx.drawImage(fish3, 750, 100, 193, 301);
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
-        ctx.drawImage(bubble1[i], 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
+        ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
+        if(bubble != 3){
+            let pop = new Image();
+            pop.src="../img/bubble3.png";
+            ctx.drawImage(pop, 1120 + (i*45), 10, 40, 40);
+        }
     }
-
     // 몇 번 째 경기인지 
     ctx.font = "bold 30px sans-serif"; 
     ctx.fillStyle = "#C5EFFF"; 
     ctx.fillText(th + " th", 20, 30); 
 }
-
 
 // 캔버스에 이미지 추가
 function addToCanvas(ctx, image, x, y, sizex, sizey) {
@@ -93,13 +105,12 @@ function addToCanvas(ctx, image, x, y, sizex, sizey) {
   };
 };
 
-
 // 한 번에 20씩 이동
 function keydown(){
     keycode=event.keyCode;
     switch(keycode){
-        case 37: dx = -230; nowX = dx; break; // 왼
-        case 39: dx = 230; nowX = dx; break; // 오
+        case 37: dx = -230; nowX = dx; chghand = 0; break; // 왼 chghand = 0 : 손 이동시 기본 이미지로
+        case 39: dx = 230; nowX = dx; chghand = 0; break; // 오
         case 13: if(eating == 0 && nowEnter == 0){ 
             keychg(); 
         }
@@ -140,58 +151,52 @@ let supfish = new Image();
 supfish.src = "../img/surprised.png";
 
 let chk = 0;
+let right = 0; // 선택 옳 여부
 function keychg(){
     // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
     th++;
+    print(); 
     if((x-hand_w) + dx > 310 && x+dx < 520){
         chk = setInterval(() => { 
             ctx.drawImage(supfish, 272, 100, 212, 301); 
         });
         if(maxIndex == 0){
-            printText("첫 번째 정답!", 210, 200);
+            chghand = 1;
+        } else {
+            chghand = 2;
+            bubble--;
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         chk = setInterval(() => {
             ctx.drawImage(supfish, 502, 100, 212, 301);
         });
         if(maxIndex == 1){
-            printText("두 번째 정답!", 210, 200);
+            chghand = 1;
+        } else {
+            chghand = 2;
+            bubble--;
         }
     } else {
         chk = setInterval(() => {
             ctx.drawImage(supfish, 732, 100, 212, 301); 
         });
         if(maxIndex == 2){
-            printText("세 번째 정답!", 210, 200);
+            chghand = 1;
+        } else {
+            chghand = 2;
+            bubble--;
         }
     }
     // 깜짝 놀란 물고기에서 기본 이미지로
     setTimeout(() => {
         clearInterval(chk);
-    }, 800);   
-
-    /*
-    손 좌표 확인
-    function checkFish() {
-        // 손의 좌표에 따라서 비교
-        //if(x > 200 && x < 500 && y > 500){
-        canvas.onclick = function(event){
-            const x = event.clientX - ctx.canvas.offsetLeft; 
-            const y = event.clientY - ctx.canvas.offsetTop;
-            if( x > 290 && x < 480 && y > 430){ // 1번 
-                goBackPage();
-            }
-            else if( x > 500 && x < 690 && y > 430){ // 1번 
-                goBackPage();
-            }
-            else if( x > 740 && x < 940 && y > 430){ // 3번
-                //th++;
-                goBackPage();
-            }
-        } 
-    }*/
-
+        clearInterval(cho); // 물고기 위에 숫자
+    }, 1000);   
+     
+    setTimeout(() => {
+        clearInterval(right);
+    }, 700);
 }
 
 
@@ -284,13 +289,23 @@ function gameStart() {
     printText("게임 시작", 400, 200, 900);
 }
 
+// ---------------------- 게임 over ----------------------
+// bubble이 0이 되면 출력하도록
+function gameOver() {
+    setTimeout(() => {
+        printText("틀렸습니다", 400, 200, 900);
+    }, 1000);
+}
+
 // ------------------ 가장 많이 먹은 물고기 -----------------
-function print() {
-    for(let i=0; i<3; i++){
-        ctx.font = "bold 30px sans-serif"; 
-        ctx.fillStyle = "#C5EFFF"; 
-        ctx.fillText(sum[i], 150 + ((i+1)*230), 90); // 간격 수정
-    }
+function print() {   
+    cho = setInterval(() => {
+        for(let i=0; i<3; i++){
+            ctx.font = "bold 30px sans-serif"; 
+            ctx.fillStyle = "#C5EFFF"; 
+            ctx.fillText(sum[i], 150 + ((i+1)*230), 90); // 간격 수정
+        }
+    });
 }
 
 // -------------- 클리어 하거나 게임오버까지 진행 ----------------
@@ -299,31 +314,11 @@ function replay() {
         fishMove();
     }, 1400); // 1.4 초 뒤에 시작
     
-    let chg = setTimeout(() => {
+    setTimeout(() => {
         eating = 0;
         printText("물고기를 선택하세요", 210, 200, 800);
-    }, baseSpeed * n); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
+    }, baseSpeed * n + 300); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
-
-// ------------ 선택한 물고기가 맞는지 아닌지 ------------------
-/*function checkFish() {
-    // 손의 좌표에 따라서 비교
-    //if(x > 200 && x < 500 && y > 500){
-    canvas.onclick = function(event){
-        const x = event.clientX - ctx.canvas.offsetLeft; 
-        const y = event.clientY - ctx.canvas.offsetTop;
-        if( x > 290 && x < 480 && y > 430){ // 1번 
-            goBackPage();
-        }
-        else if( x > 500 && x < 690 && y > 430){ // 1번 
-            goBackPage();
-        }
-        else if( x > 740 && x < 940 && y > 430){ // 3번
-            //th++;
-            goBackPage();
-        }
-    } 
-}*/
 
 // ---------------- 많이 먹은 물고기 공개 --------------------
 function maxEatFish() {
@@ -338,3 +333,5 @@ function maxEatFish() {
 function reset() {
     
 }
+
+// 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
