@@ -143,26 +143,27 @@ let chk = 0;
 function keychg(){
     // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
+    th++;
     if((x-hand_w) + dx > 310 && x+dx < 520){
         chk = setInterval(() => { 
             ctx.drawImage(supfish, 272, 100, 212, 301); 
         });
         if(maxIndex == 0){
-            th++;
+            printText("첫 번째 정답!", 210, 200);
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         chk = setInterval(() => {
             ctx.drawImage(supfish, 502, 100, 212, 301);
         });
         if(maxIndex == 1){
-            th++
+            printText("두 번째 정답!", 210, 200);
         }
     } else {
         chk = setInterval(() => {
             ctx.drawImage(supfish, 732, 100, 212, 301); 
         });
         if(maxIndex == 2){
-            th++;
+            printText("세 번째 정답!", 210, 200);
         }
     }
     // 깜짝 놀란 물고기에서 기본 이미지로
@@ -215,7 +216,6 @@ function fishMove(){ //물고기 이미지 바꾸기
     
     for(i=1; i<=n; i++){
         eating = 1;
-        th++;
         let imgNum = Math.floor(Math.random()*3); //바뀔 물고기 번호 랜덤값 생성
         let eatSpeed = 800;
         
@@ -267,21 +267,21 @@ function reImg(imgNum){ //기본 이미지로 변경
 }
 
 // ---------------------- 문장 출력 -----------------------
-let text, tx, ty; 
-function printText(text, tx, ty) {
-    ctx.font = "bold 100px sans-serif"; //font = "스타일 폰트크기 폰트"
-    ctx.fillStyle = "#C5EFFF"; //font = "스타일 폰트크기 폰트"
-    ctx.fillText(text, tx, ty); //fillText(텍스트, x, y)
+let text, tx, ty, ptime; 
+function printText(text, tx, ty, ptime) {
+    let printT = setInterval(() => {
+        ctx.font = "bold 100px sans-serif"; //font = "스타일 폰트크기 폰트"
+        ctx.fillStyle = "#C5EFFF"; //font = "스타일 폰트크기 폰트"
+        ctx.fillText(text, tx, ty); //fillText(텍스트, x, y)
+    });
+    setTimeout(() => {
+        clearInterval(printT);
+    }, ptime);
 }
 
 // ---------------------- 게임 start ----------------------
 function gameStart() {
-    let start = setInterval(() => {
-        printText("게임 시작", 400, 200);
-    });
-    setTimeout(() => {
-        clearInterval(start);
-    }, 900);
+    printText("게임 시작", 400, 200, 900);
 }
 
 // ------------------ 가장 많이 먹은 물고기 -----------------
@@ -301,17 +301,7 @@ function replay() {
     
     let chg = setTimeout(() => {
         eating = 0;
-
-        let choice = setInterval(() => {
-            printText("물고기를 선택하세요", 210, 200);
-        });
-        
-        if(eating == 0){
-            clearTimeout(chg);
-            setTimeout(() => {
-                clearInterval(choice);
-            }, 800);
-        }
+        printText("물고기를 선택하세요", 210, 200, 800);
     }, baseSpeed * n); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
 
