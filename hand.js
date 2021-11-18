@@ -29,7 +29,7 @@ fish3.src="../img/fish3.png";
 // 비눗방울
 let bubble1 = new Image();
 bubble1.src = "../img/bubble1.png";
-let bubble = 0; // 감소 개수 
+let bubble = -1; // 감소 개수 
 
 // 버튼
 let btn = new Image();
@@ -89,11 +89,11 @@ function draw(){
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
-        /*if(bubble < 3){
+        if(bubble != -1 && bubble < 3){
             let pop = new Image();
             pop.src="../img/bubble3.png";
             ctx.drawImage(pop, 1120 + (bubble*45), 10, 40, 40);
-        }*/
+        }
     }
     // 몇 번 째 경기인지 
     ctx.font = "bold 30px sans-serif"; 
@@ -340,4 +340,3 @@ function reset() {
 }
 
 // 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
-// 물고기 선택 후에 결과에 따라서 목숨이 바뀌어야 됨
