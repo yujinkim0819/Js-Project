@@ -29,7 +29,7 @@ fish3.src="../img/fish3.png";
 // 비눗방울
 let bubble1 = new Image();
 bubble1.src = "../img/bubble1.png";
-let bubble = 3; // 감소 개수 
+let bubble = 0; // 감소 개수 
 
 // 버튼
 let btn = new Image();
@@ -68,6 +68,11 @@ function moveHand(){
         x+=dx; // 좌표 이동
 }
 
+function clearCanvas()
+{
+    ctx.clearRect(50, 50, canvas.width, canvas.height); // 픽셀 정리
+    ctx.beginPath(); // 컨텍스트 리셋
+}
 
 function draw(){
     ctx.drawImage(water,0,0,1260, 595); // 배경 출력
@@ -84,11 +89,11 @@ function draw(){
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
-        if(bubble != 3){
+        /*if(bubble < 3){
             let pop = new Image();
             pop.src="../img/bubble3.png";
-            ctx.drawImage(pop, 1120 + (i*45), 10, 40, 40);
-        }
+            ctx.drawImage(pop, 1120 + (bubble*45), 10, 40, 40);
+        }*/
     }
     // 몇 번 째 경기인지 
     ctx.font = "bold 30px sans-serif"; 
@@ -165,7 +170,7 @@ function keychg(){
             chghand = 1;
         } else {
             chghand = 2;
-            bubble--;
+            bubble++;
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         chk = setInterval(() => {
@@ -175,7 +180,7 @@ function keychg(){
             chghand = 1;
         } else {
             chghand = 2;
-            bubble--;
+            bubble++;
         }
     } else {
         chk = setInterval(() => {
@@ -185,7 +190,7 @@ function keychg(){
             chghand = 1;
         } else {
             chghand = 2;
-            bubble--;
+            bubble++;
         }
     }
     // 깜짝 놀란 물고기에서 기본 이미지로
@@ -317,7 +322,7 @@ function replay() {
     setTimeout(() => {
         eating = 0;
         printText("물고기를 선택하세요", 210, 200, 800);
-    }, baseSpeed * n + 300); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
+    }, baseSpeed * n + 200); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
 
 // ---------------- 많이 먹은 물고기 공개 --------------------
@@ -329,9 +334,10 @@ function maxEatFish() {
     }
 }
 
-// --------------- 초기화 ---------------------
+// ---------------------- 초기화 -------------------------
 function reset() {
     
 }
 
 // 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
+// 물고기 선택 후에 결과에 따라서 목숨이 바뀌어야 됨
