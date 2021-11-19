@@ -35,6 +35,24 @@ let bubble = -1; // 감소 개수
 let btn = new Image();
 btn.src = "../img/btn.png";
 
+// ---------------------- 문장 출력 -----------------------
+let text, tx, ty, ptime; 
+function printText(text, tx, ty, ptime) {
+    let printT;
+    printT = setInterval(() => {
+        ctx.font = "bold 100px sans-serif"; //font = "스타일 폰트크기 폰트"
+        ctx.fillStyle = "#C5EFFF"; //font = "스타일 폰트크기 폰트"
+        ctx.fillText(text, tx, ty); //fillText(텍스트, x, y)
+    });
+    setTimeout(() => {
+        clearInterval(printT);
+    }, ptime);
+}
+
+// ---------------------- 게임 start ----------------------
+function gameStart() {
+    printText("게임 시작", 400, 200, 900);
+}
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
 let leaf = new Image();
@@ -276,23 +294,7 @@ function reImg(imgNum){ //기본 이미지로 변경
     }
 }
 
-// ---------------------- 문장 출력 -----------------------
-let text, tx, ty, ptime; 
-function printText(text, tx, ty, ptime) {
-    let printT = setInterval(() => {
-        ctx.font = "bold 100px sans-serif"; //font = "스타일 폰트크기 폰트"
-        ctx.fillStyle = "#C5EFFF"; //font = "스타일 폰트크기 폰트"
-        ctx.fillText(text, tx, ty); //fillText(텍스트, x, y)
-    });
-    setTimeout(() => {
-        clearInterval(printT);
-    }, ptime);
-}
 
-// ---------------------- 게임 start ----------------------
-function gameStart() {
-    printText("게임 시작", 400, 200, 900);
-}
 
 // ---------------------- 게임 over ----------------------
 // bubble이 0이 되면 출력하도록
@@ -340,3 +342,4 @@ function reset() {
 }
 
 // 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
+// 게임오버 설정, 게임 9판까지 반복하기 
