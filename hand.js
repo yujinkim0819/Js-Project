@@ -62,9 +62,22 @@ function gameStart() {
     printText("게임 시작", 400, 200, 900);
 }
 
+let str;
+function findFishEating() {
+    playgame();
+    if(th <= 9){
+        str = setTimeout(() => {
+            movingHand();
+            //chghand = 0;
+        }, 1000);
+    } else {
+        location.href = "gameover.html"; 
+        clearTimeout(str);
+    }
+}
 
 function movingHand(){
-    playgame();
+    //playgame();
     setInterval(playgame,100);
     // 게임 시작 문구
     gameStart();
@@ -75,20 +88,21 @@ function movingHand(){
     //checkFish(); 필요없는 듯
 }
 
-function clearCanvas()
-{
-
-    // 픽셀 정리
-    ctx.clearRect(0, 0, 1270, 595);
-    // 컨텍스트 리셋
-    ctx.beginPath();
-}
 function playgame(){
     moveHand(); //캐릭터 움직이기
     draw(); // 이미지들 그리기   
     
     // 물고기 당 밥 먹은 개수
     // print(); 테스트 용도 
+}
+
+
+function clearCanvas()
+{
+    // 픽셀 정리
+    ctx.clearRect(0, 0, 1270, 595);
+    // 컨텍스트 리셋
+    ctx.beginPath();
 }
 
 function moveHand(){
@@ -121,7 +135,8 @@ function draw(){
             let pop = new Image();
             pop.src="../img/bubble3.png";
             ctx.drawImage(pop, 1120 + (bubble*45), 10, 40, 40);
-            location.href = "gameover.html";
+            
+            //location.href = "gameover.html";   
         }
         
     }
@@ -241,6 +256,8 @@ var n = Math.floor(Math.random()*6)+5;    //변경횟수변수
 var baseSpeed = 1100; // 기본으로 돌아오는 속도
 let nowEnter = 0; // Enter키를 눌렀는지 여부
 
+//var audio = new Audio("../img/물방울.mp3");
+
 // 먹는 물고기 객체 생성
 let eatfish= new Image();
 eatfish.src="../img/eatfish.png";
@@ -262,11 +279,15 @@ function fishMove(){ //물고기 이미지 바꾸기
         // 먹는 이미지
         setTimeout(() => {
             eatImg(imgNum);
+            /*audio.loop = true;
+            audio.volume = 0.5;
+            audio.play();*/
         }, eatSpeed * i);
 
         // 기본
         setTimeout(() => {
             reImg(imgNum);
+            //audio.pause();
         }, baseSpeed * i);
         
         if(imgNum == 0) {
@@ -350,6 +371,8 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
+    x = 600, y = 500; // 손 처음 위치
+    chghand = 0;
     th = 1;
 }
 
