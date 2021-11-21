@@ -7,6 +7,10 @@ let x = 600, y = 500; // 손 처음 위치
 let hand_w = 40, hand_h = 95; // 손의 크기
 let th = 1; // 몇 번째 판
 let chghand = 0; // 기본, 정답, 오답 -> 손
+let replace; // 한 게임 당 3번 씩 반복
+
+let canvas= document.getElementById('c1');
+let ctx= canvas.getContext('2d'); // 화가 객체
 
 // 배경, 손 객체 생성
 let water= new Image();
@@ -35,6 +39,10 @@ let bubble = -1; // 감소 개수
 let btn = new Image();
 btn.src = "../img/btn.png";
 
+// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
+let leaf = new Image();
+leaf.src = "../img/leaf.png";
+
 // ---------------------- 문장 출력 -----------------------
 let text, tx, ty, ptime; 
 function printText(text, tx, ty, ptime) {
@@ -54,14 +62,8 @@ function gameStart() {
     printText("게임 시작", 400, 200, 900);
 }
 
-// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
-let leaf = new Image();
-leaf.src = "../img/leaf.png";
 
-let canvas= document.getElementById('c1');
-let ctx= canvas.getContext('2d'); // 화가 객체
 function movingHand(){
-    let replace = 3; // 한 게임 당 3번 반복
     playgame();
     setInterval(playgame,100);
     // 게임 시작 문구
@@ -73,6 +75,14 @@ function movingHand(){
     //checkFish(); 필요없는 듯
 }
 
+function clearCanvas()
+{
+
+    // 픽셀 정리
+    ctx.clearRect(0, 0, 1270, 595);
+    // 컨텍스트 리셋
+    ctx.beginPath();
+}
 function playgame(){
     moveHand(); //캐릭터 움직이기
     draw(); // 이미지들 그리기   
@@ -111,7 +121,9 @@ function draw(){
             let pop = new Image();
             pop.src="../img/bubble3.png";
             ctx.drawImage(pop, 1120 + (bubble*45), 10, 40, 40);
+            location.href = "gameover.html";
         }
+        
     }
     // 몇 번 째 경기인지 
     ctx.font = "bold 30px sans-serif"; 
@@ -338,7 +350,7 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
-    
+    th = 1;
 }
 
 // 목숨이 있는지 없는지 여부에 따라서 게임진행 체크

@@ -5,20 +5,34 @@
         <meta charset="utf-8">
         <title>게임오버</title>
         <style>
-            #ing{
+            #gameover{
                 width: 1030px;
                 height: 550px;
                 padding-top: 30px;
+                background-size: cover;
             }
             body{
                 background-color: #5ED4FF;
                 background-size: cover;
+            }
+            button{
+                width: 120px;
+                height: 40px;
+                border: 5px solid lightskyblue;
+                background-color: rgb(255, 255, 255);
+                color:lightskyblue; 
+                padding: 5px;
+                border-radius: 30px 30px 30px 30px;
+                margin-left: 1000px;
             }
         </style>
     </head>
     <body style="overflow-y: hidden; overflow-x: hidden;">
         <div style="text-align: center;">
             <img src="../img/gameover.png" id="gameover">
+            <a href="Menu.html">
+                <button>메뉴</button> 
+            </a>
         </div>
     </body>
 </html>
