@@ -9,6 +9,7 @@ let th = 1; // 몇 번째 판
 let chghand = 0; // 기본, 정답, 오답 -> 손
 let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
+let stop = 0; // 만약 bubble이 3이 되면 게임 중지
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -64,25 +65,18 @@ function gameStart() {
 }
 
 let str;
-
-/*
-function findFishEating() {
-    playgame();
-    str = setTimeout(() => {
-        movingHand();
-    }, 1000);
-}
-*/
-
 function movingHand(){
-    setTimeout(() => {
+    //setTimeout(() => {
         playgame();
-        setInterval(playgame, 100);
+        //setInterval(playgame, 100);
+        setInterval(() => {
+            playgame();
+        }, 100);
         // 게임 시작 문구
         gameStart();
         replay();
         click();
-    }, 1000);
+    //}, 1000);
     // 테스트
     //checkFish(); 필요없는 듯
 }
@@ -94,16 +88,6 @@ function playgame(){
     // 물고기 당 밥 먹은 개수
     // print(); 테스트 용도 
 }
-
-/*
-function clearCanvas()
-{
-    // 픽셀 정리
-    ctx.clearRect(0, 0, 1270, 595);
-    // 컨텍스트 리셋
-    ctx.beginPath();
-}
-*/
 
 function moveHand(){
     if((x-hand_w) + dx > 310 && x+dx < 860) // hand 이동 제한
@@ -131,12 +115,15 @@ function draw(){
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
-        if(bubble != -1 && bubble < 3){
+        if(bubble != -1 && bubble <= 2){
             let pop = new Image();
             pop.src="../img/bubble3.png";
-            ctx.drawImage(pop, 1120 + (bubble*45), 10, 40, 40);
-            
-            //location.href = "gameover.html";   
+            for(let j=0; j<=bubble; j++){
+                ctx.drawImage(pop, 1120 + (j*45), 10, 40, 40);
+            }
+            if(bubble == 2){
+                stop = 1;
+            }
         }
         
     }
@@ -333,15 +320,18 @@ function reImg(imgNum){ //기본 이미지로 변경
 // ---------------------- 게임 over ----------------------
 // bubble이 0이 되면 출력하도록
 function gameOver() {
-    if(th > 9){
+    if(stop == 1 || bubble == 3){
         setTimeout(() => {
             clearCanvas();
             location.href = "gameover.html"; 
-            clearTimeout(str);
+        }, 1000);
+    } else if(th == 9){
+        setTimeout(() => {
+            clearCanvas();
+            location.href = "clear.html"; 
         }, 1500);
     } else {
-        //reset();
-        eating = 0;
+        reset() ;
         movingHand();
     }
 }
@@ -380,9 +370,13 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
+    nowEnter = 0; // Enter키, 물고기 선택 해제
+    //eating = 0;
+    dx = 0; // x의 이동 좌표
+    nowX = 0; // 현재 이동한 x좌표 
     x = 600, y = 500; // 손 처음 위치
-    chghand = 0;
+    chghand = 0; // 기본, 정답, 오답 -> 손
 }
 
-// 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
-// 게임오버 설정, 게임 9판까지 반복하기 
+
+// 단계별 속도 조절
