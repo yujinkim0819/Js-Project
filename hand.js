@@ -41,10 +41,6 @@ let bubble = -1; // 감소 개수
 let btn = new Image();
 btn.src = "../img/btn.png";
 
-// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
-let leaf = new Image();
-leaf.src = "../img/leaf.png";
-
 // ---------------------- 문장 출력 -----------------------
 let text, tx, ty, ptime; 
 function printText(text, tx, ty, ptime) {
@@ -66,17 +62,15 @@ function gameStart() {
 
 let str;
 function movingHand(){
-    //setTimeout(() => {
+    playgame();
+    setInterval(() => {
         playgame();
-        //setInterval(playgame, 100);
-        setInterval(() => {
-            playgame();
-        }, 100);
-        // 게임 시작 문구
-        gameStart();
-        replay();
-        click();
-    //}, 1000);
+    }, 100);
+    // 게임 시작 문구
+    gameStart();
+    replay();
+    click();
+
     // 테스트
     //checkFish(); 필요없는 듯
 }
@@ -178,10 +172,6 @@ function click() {
     } 
 }
 
-// 현재 레벨이 3일 경우 : 제공하는 힌트
-function hint() {
-    addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
-}
 
 // ------------- 깜짝 놀란 물고기 -------------------
 let supfish = new Image();
@@ -378,5 +368,14 @@ function reset() {
     chghand = 0; // 기본, 정답, 오답 -> 손
 }
 
+// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
+let leaf = new Image();
+leaf.src = "../img/leaf.png";
+// 현재 레벨이 3일 경우 : 제공하는 힌트
+function hint() {
+    addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
+}
 
-// 단계별 속도 조절
+
+
+// 단계별 속도 조절, 폴사
