@@ -8,6 +8,7 @@ let hand_w = 40, hand_h = 95; // 손의 크기
 let th = 1; // 몇 번째 판
 let chghand = 0; // 기본, 정답, 오답 -> 손
 let replace; // 한 게임 당 3번 씩 반복
+let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -63,27 +64,25 @@ function gameStart() {
 }
 
 let str;
+
+/*
 function findFishEating() {
     playgame();
-    if(th <= 9){
-        str = setTimeout(() => {
-            movingHand();
-            //chghand = 0;
-        }, 1000);
-    } else {
-        location.href = "gameover.html"; 
-        clearTimeout(str);
-    }
+    str = setTimeout(() => {
+        movingHand();
+    }, 1000);
 }
+*/
 
 function movingHand(){
-    //playgame();
-    setInterval(playgame,100);
-    // 게임 시작 문구
-    gameStart();
-    replay();
-    click();
-
+    setTimeout(() => {
+        playgame();
+        setInterval(playgame, 100);
+        // 게임 시작 문구
+        gameStart();
+        replay();
+        click();
+    }, 1000);
     // 테스트
     //checkFish(); 필요없는 듯
 }
@@ -96,7 +95,7 @@ function playgame(){
     // print(); 테스트 용도 
 }
 
-
+/*
 function clearCanvas()
 {
     // 픽셀 정리
@@ -104,6 +103,7 @@ function clearCanvas()
     // 컨텍스트 리셋
     ctx.beginPath();
 }
+*/
 
 function moveHand(){
     if((x-hand_w) + dx > 310 && x+dx < 860) // hand 이동 제한
@@ -205,7 +205,6 @@ let right = 0; // 선택 옳 여부
 function keychg(){
     // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
-    th++;
     print(); 
     if((x-hand_w) + dx > 310 && x+dx < 520){
         chk = setInterval(() => { 
@@ -242,6 +241,9 @@ function keychg(){
     setTimeout(() => {
         clearInterval(chk);
         clearInterval(cho); // 물고기 위에 숫자
+        th++;
+        gameOver(); // 게임 오버
+        end = 1; // 추가
     }, 1000);   
      
     setTimeout(() => {
@@ -270,7 +272,6 @@ sum = [0, 0, 0];
 
 function fishMove(){ //물고기 이미지 바꾸기
     let i, j;
-    
     for(i=1; i<=n; i++){
         eating = 1;
         let imgNum = Math.floor(Math.random()*3); //바뀔 물고기 번호 랜덤값 생성
@@ -332,9 +333,17 @@ function reImg(imgNum){ //기본 이미지로 변경
 // ---------------------- 게임 over ----------------------
 // bubble이 0이 되면 출력하도록
 function gameOver() {
-    setTimeout(() => {
-        printText("틀렸습니다", 400, 200, 900);
-    }, 1000);
+    if(th > 9){
+        setTimeout(() => {
+            clearCanvas();
+            location.href = "gameover.html"; 
+            clearTimeout(str);
+        }, 1500);
+    } else {
+        //reset();
+        eating = 0;
+        movingHand();
+    }
 }
 
 // ------------------ 가장 많이 먹은 물고기 -----------------
@@ -373,7 +382,6 @@ function maxEatFish() {
 function reset() {
     x = 600, y = 500; // 손 처음 위치
     chghand = 0;
-    th = 1;
 }
 
 // 목숨이 있는지 없는지 여부에 따라서 게임진행 체크
