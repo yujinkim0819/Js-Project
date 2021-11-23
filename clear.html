@@ -3,36 +3,38 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>게임오버</title>
+        <title>클리어</title>
         <style>
-            #gameover{
-                width: 1030px;
-                height: 550px;
-                padding-top: 30px;
-                background-size: cover;
-            }
             body{
+                margin: 0;
                 background-color: #5ED4FF;
-                background-size: cover;
+                background-image: url('../img/clear.png');
+                background-repeat: no-repeat;
+                background-size: 1120px 620px;
             }
             button{
-                width: 120px;
-                height: 40px;
-                border: 5px solid white;
+                float: left;
+                width: 220px;
+                height: 60px;
+                font-weight: bolder;
+                border: 4px solid #C5EFFF;
                 background-color: #5ED4FF;
-                color:white; 
+                color:#C5EFFF; 
                 padding: 5px;
+                margin-top: 470px;
+                margin-left: 940px;
                 border-radius: 30px 30px 30px 30px;
-                margin-left: 1000px;
+                font-size : 23px;
+            }
+            button:hover{
+                color: #5ED4FF;
+                background-color: #C5EFFF;
             }
         </style>
     </head>
     <body style="overflow-y: hidden; overflow-x: hidden;">
-        <div style="text-align: center;">
-            <img src="../img/clear.png" id="gameover">
-            <a href="Menu.html">
-                <button>메뉴</button> 
-            </a>
-        </div>
+        <a href="Menu.html">
+            <button>메뉴</button> 
+        </a>
     </body>
 </html>

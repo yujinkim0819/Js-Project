@@ -2,17 +2,29 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<!--
 <script type="text/javascript">
  
 function ChangeImg(){
-    document.getElementById("imgId").src = "../img/hand.png";
     
+    document.getElementById("imgId").src = "../img/fish1.png";
 }
-
 </script>
+-->
+    <script type="text/javascript">
+        function changeImage(a) {
+            document.getElementById("img").src=a;
+        }
+    </script>
+    <div id="main_img">
+        <img id="img" src="../img/bubble1.png">
+    </div>
+    <div id="thumb_img">
+        <img src='../img/bubble1.png'  onclick='changeImage("../img/bubble3.png");'>
+        <img src='../img/bubble1.png'  onclick='changeImage("../img/bubble3.png");'>
+        <img src='../img/bubble1.png'  onclick='changeImage("../img/bubble3.png");'>
+    </div>
 </head>
 <body>
-<div onclick="ChangeImg()">커피이미지</div>
-<img id="imgId" src="../img/leaf.png">
 </body>
 </html>

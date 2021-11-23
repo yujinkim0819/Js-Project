@@ -60,6 +60,31 @@ function gameStart() {
     printText("게임 시작", 400, 200, 900);
 }
 
+// ------------------ 가장 많이 먹은 물고기 -----------------
+function print() {   
+    cho = setInterval(() => {
+        for(let i=0; i<3; i++){
+            ctx.font = "bold 30px sans-serif"; 
+            ctx.fillStyle = "#C5EFFF"; 
+            ctx.fillText(sum[i], 150 + ((i+1)*230), 90); // 간격 수정
+        }
+    });
+}
+
+// -------------- 클리어 하거나 게임오버까지 진행 ----------------
+function replay() {
+    setTimeout(() => {
+        fishMove();
+    }, 1400); // 1.4 초 뒤에 시작
+    
+    setTimeout(() => {
+        eating = 0;
+        printText("물고기를 선택하세요", 210, 200, 800);
+    }, baseSpeed * n + 200); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
+}
+
+
+// 메인
 let str;
 function movingHand(){
     playgame();
@@ -79,8 +104,7 @@ function playgame(){
     moveHand(); //캐릭터 움직이기
     draw(); // 이미지들 그리기   
     
-    // 물고기 당 밥 먹은 개수
-    // print(); 테스트 용도 
+    // print(); // 테스트 용도 
 }
 
 function moveHand(){
@@ -102,7 +126,7 @@ function draw(){
         ctx.drawImage(goodhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
     } else if(chghand == 2){ 
         ctx.drawImage(badhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
-    } 
+    }
     ctx.drawImage(fish1, 290, 100, 193, 301);
     ctx.drawImage(fish2, 520, 100, 193, 301);
     ctx.drawImage(fish3, 750, 100, 193, 301);
@@ -178,11 +202,10 @@ let supfish = new Image();
 supfish.src = "../img/surprised.png";
 
 let chk = 0;
-let right = 0; // 선택 옳 여부
 function keychg(){
-    // 맨 왼쪽의 물고기의 좌표 부분을 놀란 물고기로
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
     print(); 
+    
     if((x-hand_w) + dx > 310 && x+dx < 520){
         chk = setInterval(() => { 
             ctx.drawImage(supfish, 272, 100, 212, 301); 
@@ -205,7 +228,7 @@ function keychg(){
         }
     } else {
         chk = setInterval(() => {
-            ctx.drawImage(supfish, 732, 100, 212, 301); 
+            ctx.drawImage(supfish, 732, 100, 212, 301);
         });
         if(maxIndex == 2){
             chghand = 1;
@@ -232,7 +255,8 @@ function keychg(){
 // --------- 먹고 돌아오는 반복 -----------------
 var eating = 0, maxIndex = 0;
 var n = Math.floor(Math.random()*6)+5;    //변경횟수변수
-var baseSpeed = 1100; // 기본으로 돌아오는 속도
+let eatSpeed = 800;
+let baseSpeed = eatSpeed + 300; // 기본으로 돌아오는 속도
 let nowEnter = 0; // Enter키를 눌렀는지 여부
 
 //var audio = new Audio("../img/물방울.mp3");
@@ -246,26 +270,22 @@ eatfish2.src="../img/eatfish2.png";
 //밥먹는 횟수 저장 배열
 let sum = new Array(3);
 sum = [0, 0, 0];
+var eatTime = 0;
 
 function fishMove(){ //물고기 이미지 바꾸기
     let i, j;
     for(i=1; i<=n; i++){
         eating = 1;
         let imgNum = Math.floor(Math.random()*3); //바뀔 물고기 번호 랜덤값 생성
-        let eatSpeed = 800;
         
         // 먹는 이미지
-        setTimeout(() => {
+        eatTime = setTimeout(() => {
             eatImg(imgNum);
-            /*audio.loop = true;
-            audio.volume = 0.5;
-            audio.play();*/
         }, eatSpeed * i);
 
         // 기본
         setTimeout(() => {
-            reImg(imgNum);
-            //audio.pause();
+            clearTimeout(eatTime); // 먹는 물고기 해제
         }, baseSpeed * i);
         
         if(imgNum == 0) {
@@ -295,59 +315,23 @@ function eatImg(imgNum){ //먹는 이미지로 변경
     }
 }
 
-function reImg(imgNum){ //기본 이미지로 변경
-    if(imgNum==0){
-        ctx.drawImage(fish1, 290, 100, 193, 301);
-    }else if(imgNum==1){
-        ctx.drawImage(fish2, 520, 100, 193, 301);
-    }else if(imgNum==2){
-        ctx.drawImage(fish3, 750, 100, 193, 301);
-    }
-}
-
-
-
 // ---------------------- 게임 over ----------------------
-// bubble이 0이 되면 출력하도록
 function gameOver() {
     if(stop == 1 || bubble == 3){
         setTimeout(() => {
-            clearCanvas();
             location.href = "gameover.html"; 
         }, 1000);
     } else if(th == 9){
         setTimeout(() => {
-            clearCanvas();
             location.href = "clear.html"; 
         }, 1500);
     } else {
-        reset() ;
+        reset();
         movingHand();
     }
 }
 
-// ------------------ 가장 많이 먹은 물고기 -----------------
-function print() {   
-    cho = setInterval(() => {
-        for(let i=0; i<3; i++){
-            ctx.font = "bold 30px sans-serif"; 
-            ctx.fillStyle = "#C5EFFF"; 
-            ctx.fillText(sum[i], 150 + ((i+1)*230), 90); // 간격 수정
-        }
-    });
-}
 
-// -------------- 클리어 하거나 게임오버까지 진행 ----------------
-function replay() {
-    setTimeout(() => {
-        fishMove();
-    }, 1400); // 1.4 초 뒤에 시작
-    
-    setTimeout(() => {
-        eating = 0;
-        printText("물고기를 선택하세요", 210, 200, 800);
-    }, baseSpeed * n + 200); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
-}
 
 // ---------------- 많이 먹은 물고기 공개 --------------------
 function maxEatFish() {
@@ -360,12 +344,15 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
+    
     nowEnter = 0; // Enter키, 물고기 선택 해제
-    //eating = 0;
     dx = 0; // x의 이동 좌표
     nowX = 0; // 현재 이동한 x좌표 
     x = 600, y = 500; // 손 처음 위치
     chghand = 0; // 기본, 정답, 오답 -> 손
+    sum = [0, 0, 0]; // 각 물고기가 먹은 밥
+    max = sum[0]; 
+    maxIndex = 0; // 가장 많이 먹은 물고기
 }
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
