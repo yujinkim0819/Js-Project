@@ -57,7 +57,9 @@ function printText(text, tx, ty, ptime) {
 
 // ---------------------- 게임 start ----------------------
 function gameStart() {
-    printText("게임 시작", 400, 200, 900);
+    //setTimeout(() => {
+        printText("게임 시작", 400, 200, 900);
+    //}, 900);
 }
 
 // ------------------ 가장 많이 먹은 물고기 -----------------
@@ -355,7 +357,7 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
-    clearTimeout(eatTime); // 먹는 물고기 해제
+    //clearTimeout(eatTime); // 먹는 물고기 해제
     nowEnter = 0; // Enter키, 물고기 선택 해제
     dx = 0; // x의 이동 좌표
     nowX = 0; // 현재 이동한 x좌표 
