@@ -285,7 +285,7 @@ function fishMove(){ //물고기 이미지 바꾸기
 
         // 기본
         setTimeout(() => {
-            clearTimeout(eatTime); // 먹는 물고기 해제
+            reImg(imgNum);
         }, baseSpeed * i);
         
         if(imgNum == 0) {
@@ -314,6 +314,17 @@ function eatImg(imgNum){ //먹는 이미지로 변경
         ctx.drawImage(eatfish, 750, 100, 193, 301);
     }
 }
+
+function reImg(imgNum){ //기본 이미지로 변경
+    if(imgNum==0){
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+    }else if(imgNum==1){
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+    }else if(imgNum==2){
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+    }
+}
+
 
 // ---------------------- 게임 over ----------------------
 function gameOver() {
@@ -344,7 +355,7 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
-    
+    clearTimeout(eatTime); // 먹는 물고기 해제
     nowEnter = 0; // Enter키, 물고기 선택 해제
     dx = 0; // x의 이동 좌표
     nowX = 0; // 현재 이동한 x좌표 
