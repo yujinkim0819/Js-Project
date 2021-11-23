@@ -6,13 +6,13 @@
         <style>
             body{
                 margin: 0;
-                background-image: url('../img/backwater.png');
+                background-image: url('../img/water.png');
                 background-repeat: no-repeat;
                 background-size: cover;
             }
             p{
-                margin-top: 60px;
-                margin-left: 240px;
+                margin-top: 45px;
+                margin-left: 180px;
                 font-size: 21px;
                 color: rgb(56, 71, 97);
                 font-weight: bold;
@@ -26,32 +26,37 @@
                 color:lightskyblue; 
                 padding: 10px;
                 border-radius: 30px 30px 30px 30px;
-                margin-left: 880px;
+                margin-left: 790px;
                 font-weight: bolder;
                 font-size : 20px;
             }
             #btnPo{
-                width: 70px;
+                width: 60px;
                 height: 70x;
-                border: 5px solid lightskyblue;
-                background-color: #C5EFFF;
-                color:lightskyblue; 
-                padding: 10px;
-                border-radius: 30px 30px 30px 30px;
-                margin-left: 830px;
+                color:burlywood; 
+                padding: 7px;
+                border-radius: 20px 20px 20px 20px;
+                margin-left: 770px;
                 font-weight: bolder;
-                font-size : 20px;
+                font-size : 9px;
+            }
+            #img{
+                width: 130px;
+                height: 90x;
             }
         </style>
+        <script>
+            function goBackPage() {
+                window.history.back();
+            }
+        </script>
     </head>
     <body>
         <p>
             물고기 세바스찬들은 배가 항상 고픕니다<br>
             서로서로 많이 먹으려고 속도를 내는데...<br><br>
-
-            <a href="handMove.html" type="button" id="btnPo"></a><br>
-
             그 중 밥을 가장 많이 먹은 세바스찬을 골라주세요<br>
+            <br>
             기회는 총 3번입니다<br>
             기회를 다 잃으면 게임오버<br><br>
 
@@ -59,21 +64,13 @@
             9번을 성공해서 욕심쟁이 세반스찬을 잡아주세요!!<br>
 
             1판을 끝낼 때 마다 세바스찬이 밥을 먹는 속도는 점점 빨라집니다
-            <br><br><br>
+            <a href="Photos.html" type="button" id="btnPo">
+                <img id="img" src="../img/picture_3.png" />
+            </a><br>
             키보드를 좌우로 화면에 보이는 손가락을 움직여 세바스찬을 고르고<br>
             "물고기를 선택하세요" 문구가 나온 뒤 Enter 키를 눌러 선택을 할 수 있습니다
+            <button onclick="goBackPage()" id="btnBack"> 뒤로 가기</button>
         </p>
         
-
-        <button onclick="goBackPage()" id="btnBack"> 
-            뒤로 가기 
-        </button>
-        <script>
-            function goBackPage() {
-                window.history.back();
-            }
-        </script>
     </body>
 </html>
-
-<!-- 비눗방울 속에 햐얗게 해서 게임 설명-->
