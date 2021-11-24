@@ -9,7 +9,7 @@ let th = 1; // 몇 번째 판
 let chghand = 0; // 기본, 정답, 오답 -> 손
 let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
-let stop = 0; // 만약 bubble이 3이 되면 게임 중지
+let stop = 0; // 만약 bubble이 2가 되면 게임 중지
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -57,9 +57,9 @@ function printText(text, tx, ty, ptime) {
 
 // ---------------------- 게임 start ----------------------
 function gameStart() {
-    //setTimeout(() => {
-        printText("게임 시작", 400, 200, 900);
-    //}, 900);
+    setTimeout(() => {
+        printText("GAME START", 300, 250, 900);
+    }, 600);
 }
 
 // ------------------ 가장 많이 먹은 물고기 -----------------
@@ -81,20 +81,19 @@ function replay() {
     
     setTimeout(() => {
         eating = 0;
-        printText("물고기를 선택하세요", 210, 200, 800);
+        printText("물고기를 선택하세요", 210, 240, 800);
     }, baseSpeed * n + 200); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
 
 
 // 메인
-let str;
+gameStart(); // start 문구
 function movingHand(){
     playgame();
     setInterval(() => {
         playgame();
     }, 100);
     // 게임 시작 문구
-    gameStart();
     replay();
     click();
 
@@ -255,7 +254,8 @@ function keychg(){
 
 
 // --------- 먹고 돌아오는 반복 -----------------
-var eating = 0, maxIndex = 0;
+var eating = 0; // 먹고 있는 중
+var maxIndex = 0; 
 var n = Math.floor(Math.random()*6)+5;    //변경횟수변수
 let eatSpeed = 800;
 let baseSpeed = eatSpeed + 300; // 기본으로 돌아오는 속도
@@ -359,13 +359,17 @@ function maxEatFish() {
 function reset() {
     //clearTimeout(eatTime); // 먹는 물고기 해제
     nowEnter = 0; // Enter키, 물고기 선택 해제
-    dx = 0; // x의 이동 좌표
     nowX = 0; // 현재 이동한 x좌표 
+    dx = 0; // x의 이동 좌표
     x = 600, y = 500; // 손 처음 위치
     chghand = 0; // 기본, 정답, 오답 -> 손
     sum = [0, 0, 0]; // 각 물고기가 먹은 밥
     max = sum[0]; 
     maxIndex = 0; // 가장 많이 먹은 물고기
+    eating = 0;
+    eatSpeed = 800; // 속도는 th에 따라서 다르게 해야 되므로..
+    chk = 0; // 물고기가 놀란 이미지로 변경해서 들어가는 변수
+    stop = 0; // 게임 중지 여부
 }
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
