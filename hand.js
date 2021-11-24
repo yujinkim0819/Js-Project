@@ -128,9 +128,22 @@ function draw(){
     } else if(chghand == 2){ 
         ctx.drawImage(badhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
     }
-    ctx.drawImage(fish1, 290, 100, 193, 301);
-    ctx.drawImage(fish2, 520, 100, 193, 301);
-    ctx.drawImage(fish3, 750, 100, 193, 301);
+
+    if(cheat == 0){ 
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+    } else if(cheat == 1){
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+        setTimeout(() => {
+            cheat = 0;
+            fish1.src = "../img/fish1.png"; // 기본으로 다시 되돌리기
+            fish2.src = "../img/fish2.png";
+            fish3.src = "../img/fish3.png";
+        }, 1000); 
+    }
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
@@ -144,7 +157,6 @@ function draw(){
                 stop = 1;
             }
         }
-        
     }
     // 몇 번 째 경기인지 
     ctx.font = "bold 30px sans-serif"; 
@@ -203,13 +215,15 @@ let supfish = new Image();
 supfish.src = "../img/surprised.png";
 
 let chk = 0;
+let cheat = 0; // 먹는 이미지로 변경됨 : fish1 => surprised
 function keychg(){
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
     print(); 
     
     if((x-hand_w) + dx > 310 && x+dx < 520){
         chk = setInterval(() => { 
-            ctx.drawImage(supfish, 272, 100, 212, 301); 
+            fish1.src="../img/surprised.png";
+            cheat = 1;
         });
         if(maxIndex == 0){
             chghand = 1;
@@ -219,7 +233,8 @@ function keychg(){
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         chk = setInterval(() => {
-            ctx.drawImage(supfish, 502, 100, 212, 301);
+            fish2.src="../img/surprised.png";
+            cheat = 1;
         });
         if(maxIndex == 1){
             chghand = 1;
@@ -229,7 +244,8 @@ function keychg(){
         }
     } else {
         chk = setInterval(() => {
-            ctx.drawImage(supfish, 732, 100, 212, 301);
+            fish3.src="../img/surprised.png";
+            cheat = 1;
         });
         if(maxIndex == 2){
             chghand = 1;
@@ -290,13 +306,11 @@ function fishMove(){ //물고기 이미지 바꾸기
             reImg(imgNum);
         }, baseSpeed * i);
         
-        if(imgNum == 0) {
-            sum[0]++; 
-        } else if (imgNum == 1) {
-            sum[1]++;
-        } else if (imgNum == 2) {
-            sum[2]++;
-        }        
+        for(let i=0; i<3; i++){
+            if(imgNum == i){
+                sum[i]++;
+            }
+        }       
     }
     max = sum[0];
     for(j=0; j<sum.length; j++){ //가장 많이 먹은 물고기 방번호
