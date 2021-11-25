@@ -3,7 +3,7 @@
 let dx = 0; // x의 이동 좌표
 let keycode; // 키보드 입력 변수
 let nowX = 0; // 현재 이동한 x좌표 
-let x = 600, y = 500; // 손 처음 위치
+let x = 600, y = 520; // 손 처음 위치
 let hand_w = 40, hand_h = 95; // 손의 크기
 let th = 1; // 몇 번째 판
 let chghand = 0; // 기본, 정답, 오답 -> 손
@@ -121,7 +121,7 @@ function clearCanvas()
 }
 
 function draw(){
-    ctx.drawImage(water,0,0,1260, 595); // 배경 출력
+    ctx.drawImage(water,0,0,1290, 650); // 배경 출력
     if(chghand == 0) {
         ctx.drawImage(hand, x- hand_w, y- hand_h, hand_w*2, hand_h*2); // hand.png 출력
     } else if(chghand == 1){ //손 바꾸기
@@ -227,11 +227,19 @@ function click() {
 let chfish = 0; // 먹는 이미지로 변경됨 : fish1 => surprised
 function keychg(){
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
+    chfish = 1; // 물고기가 바뀌었는지 체크
+    /*for(let i=0; i<3; i++){
+        if(maxIndex == i){
+            chghand = 1;
+        } else {
+            bubble = 2;
+            chghand = 2;
+        }
+    }*/
     print(); 
     
     if((x-hand_w) + dx > 310 && x+dx < 520){
         fish1.src="../img/surprised.png";
-        chfish = 1;
         if(maxIndex == 0){
             chghand = 1;
         } else {
@@ -240,7 +248,6 @@ function keychg(){
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         fish2.src="../img/surprised.png";
-        chfish = 1;
         if(maxIndex == 1){
             chghand = 1;
         } else {
@@ -249,7 +256,6 @@ function keychg(){
         }
     } else {
         fish3.src="../img/surprised.png";
-        chfish = 1;
         if(maxIndex == 2){
             chghand = 1;
         } else {
@@ -380,11 +386,11 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
-    clearTimeout(eatTime); // 먹는 물고기 해제
+    //clearTimeout(eatTime); // 먹는 물고기 해제
     nowEnter = 0; // Enter키, 물고기 선택 해제
     nowX = 0; // 현재 이동한 x좌표 
     dx = 0; // x의 이동 좌표
-    x = 600, y = 500; // 손 처음 위치
+    x = 600, y = 520; // 손 처음 위치
     chghand = 0; // 기본, 정답, 오답 -> 손
     sum = [0, 0, 0]; // 각 물고기가 먹은 밥
     max = sum[0]; 
