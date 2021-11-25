@@ -10,6 +10,7 @@ let chghand = 0; // 기본, 정답, 오답 -> 손
 let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 let stop = 0; // 만약 bubble이 2가 되면 게임 중지
+let eatSpeed = 800;
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -129,21 +130,32 @@ function draw(){
         ctx.drawImage(badhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
     }
 
-    if(cheat == 0){ 
+    if(chfish == 0){ 
         ctx.drawImage(fish1, 290, 100, 193, 301);
         ctx.drawImage(fish2, 520, 100, 193, 301);
         ctx.drawImage(fish3, 750, 100, 193, 301);
-    } else if(cheat == 1){
+    } else if(chfish == 1){
         ctx.drawImage(fish1, 290, 100, 193, 301);
         ctx.drawImage(fish2, 520, 100, 193, 301);
         ctx.drawImage(fish3, 750, 100, 193, 301);
         setTimeout(() => {
-            cheat = 0;
+            chfish = 0;
             fish1.src = "../img/fish1.png"; // 기본으로 다시 되돌리기
             fish2.src = "../img/fish2.png";
             fish3.src = "../img/fish3.png";
         }, 1000); 
-    }
+    } /*else if(chfish == 2){
+        ctx.drawImage(fish1, 290, 100, 193, 301);
+        ctx.drawImage(fish2, 520, 100, 193, 301);
+        ctx.drawImage(fish3, 750, 100, 193, 301);
+        setTimeout(() => {
+            chfish = 0;
+            fish1.src = "../img/fish1.png"; // 기본으로 다시 되돌리기
+            fish2.src = "../img/fish2.png";
+            fish3.src = "../img/fish3.png";
+        }, eatSpeed); 
+    }*/
+
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
         ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
@@ -211,20 +223,15 @@ function click() {
 
 
 // ------------- 깜짝 놀란 물고기 -------------------
-let supfish = new Image();
-supfish.src = "../img/surprised.png";
 
-let chk = 0;
-let cheat = 0; // 먹는 이미지로 변경됨 : fish1 => surprised
+let chfish = 0; // 먹는 이미지로 변경됨 : fish1 => surprised
 function keychg(){
     nowEnter = 1; // 물고기는 한 판에 한 번만 선택 가능함
     print(); 
     
     if((x-hand_w) + dx > 310 && x+dx < 520){
-        chk = setInterval(() => { 
-            fish1.src="../img/surprised.png";
-            cheat = 1;
-        });
+        fish1.src="../img/surprised.png";
+        chfish = 1;
         if(maxIndex == 0){
             chghand = 1;
         } else {
@@ -232,10 +239,8 @@ function keychg(){
             bubble++;
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
-        chk = setInterval(() => {
-            fish2.src="../img/surprised.png";
-            cheat = 1;
-        });
+        fish2.src="../img/surprised.png";
+        chfish = 1;
         if(maxIndex == 1){
             chghand = 1;
         } else {
@@ -243,10 +248,8 @@ function keychg(){
             bubble++;
         }
     } else {
-        chk = setInterval(() => {
-            fish3.src="../img/surprised.png";
-            cheat = 1;
-        });
+        fish3.src="../img/surprised.png";
+        chfish = 1;
         if(maxIndex == 2){
             chghand = 1;
         } else {
@@ -256,7 +259,6 @@ function keychg(){
     }
     // 깜짝 놀란 물고기에서 기본 이미지로
     setTimeout(() => {
-        clearInterval(chk);
         clearInterval(cho); // 물고기 위에 숫자
         th++;
         gameOver(); // 게임 오버
@@ -272,8 +274,7 @@ function keychg(){
 // --------- 먹고 돌아오는 반복 -----------------
 var eating = 0; // 먹고 있는 중
 var maxIndex = 0; 
-var n = Math.floor(Math.random()*6)+5;    //변경횟수변수
-let eatSpeed = 800;
+var n = Math.floor(Math.random()*6)+5;    //변경횟수변수 -> 2번 랜덤하는 이유
 let baseSpeed = eatSpeed + 300; // 기본으로 돌아오는 속도
 let nowEnter = 0; // Enter키를 눌렀는지 여부
 
@@ -302,10 +303,10 @@ function fishMove(){ //물고기 이미지 바꾸기
         }, eatSpeed * i);
 
         // 기본
-        setTimeout(() => {
+        /*setTimeout(() => {
             reImg(imgNum);
         }, baseSpeed * i);
-        
+        */
         for(let i=0; i<3; i++){
             if(imgNum == i){
                 sum[i]++;
@@ -323,14 +324,21 @@ function fishMove(){ //물고기 이미지 바꾸기
 
 function eatImg(imgNum){ //먹는 이미지로 변경
     if(imgNum==0){
+        //chfish = 2; // 먹는 이미지라는 뜻
+        //fish1.src = "../img/eatfish.png";
         ctx.drawImage(eatfish, 290, 100, 193, 301);
     }else if(imgNum==1){
+        //chfish = 2; 
+        //fish2.src = "../img/eatfish.png";
         ctx.drawImage(eatfish2, 520, 100, 193, 301);
     }else if(imgNum==2){
+        //chfish = 2; 
+        //fish3.src = "../img/eatfish.png";
         ctx.drawImage(eatfish, 750, 100, 193, 301);
     }
 }
 
+/*
 function reImg(imgNum){ //기본 이미지로 변경
     if(imgNum==0){
         ctx.drawImage(fish1, 290, 100, 193, 301);
@@ -340,6 +348,7 @@ function reImg(imgNum){ //기본 이미지로 변경
         ctx.drawImage(fish3, 750, 100, 193, 301);
     }
 }
+*/
 
 
 // ---------------------- 게임 over ----------------------
@@ -371,7 +380,7 @@ function maxEatFish() {
 
 // ---------------------- 초기화 -------------------------
 function reset() {
-    //clearTimeout(eatTime); // 먹는 물고기 해제
+    clearTimeout(eatTime); // 먹는 물고기 해제
     nowEnter = 0; // Enter키, 물고기 선택 해제
     nowX = 0; // 현재 이동한 x좌표 
     dx = 0; // x의 이동 좌표
@@ -382,8 +391,10 @@ function reset() {
     maxIndex = 0; // 가장 많이 먹은 물고기
     eating = 0;
     eatSpeed = 800; // 속도는 th에 따라서 다르게 해야 되므로..
-    chk = 0; // 물고기가 놀란 이미지로 변경해서 들어가는 변수
+    baseSpeed = eatSpeed + 300;
+    //n = Math.floor(Math.random()*6)+5;
     stop = 0; // 게임 중지 여부
+
 }
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
