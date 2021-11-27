@@ -11,6 +11,7 @@ let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 let stop = 0; // 만약 bubble이 2가 되면 게임 중지
 let eatSpeed = 800;
+let chgSpeed = 250; // 기본으로 되돌리는 속도
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -154,7 +155,7 @@ function draw(){
             fish1.src = "../img/fish1.png"; // 기본으로 다시 되돌리기
             fish2.src = "../img/fish2.png";
             fish3.src = "../img/fish3.png";
-        }, 100); 
+        }, chgSpeed); 
     }
 
     ctx.drawImage(btn, 1120, 500, 100, 100);
@@ -222,12 +223,26 @@ function click() {
     } 
 }
 
+
 // 속도
+var check;
 function speed() {
-    if(th == 3){
-        baseSpeed =  eatSpeed + 200; 
+    if(th == 4){
+        chgSpeed = 90;
+        alert("Speed Up");
+
+       /* check = document.createElement("check");
+        check.className = "alert";
+        check.innerHTML = "<strong>Speed UP!!</strong>";
+        document.body.append(check); // 비로소 화면에 보임
+
+        setTimeout(() => {
+            check.remove()
+        }, 3000); */
+
     } else if(th == 6){
-        baseSpeed =  eatSpeed + 100;
+        chgSpeed = 40;
+        alert("Speed Up");
     }
 }
 
@@ -281,9 +296,9 @@ function keychg(){
         end = 1; // 추가
     }, 1000);   
      
-    setTimeout(() => {
+    /*setTimeout(() => {
         clearInterval(right);
-    }, 700);
+    }, 700);*/
 }
 
 
@@ -412,10 +427,10 @@ function reset() {
     maxIndex = 0; // 가장 많이 먹은 물고기
     eating = 0;
     //speed(); // 속도는 th에 따라서 다르게 해야 되므로..
-    baseSpeed = eatSpeed + 300;
+    //baseSpeed = eatSpeed + 300;
     //n = Math.floor(Math.random()*6)+5;
     stop = 0; // 게임 중지 여부
-
+    speed();
 }
 
 // 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
