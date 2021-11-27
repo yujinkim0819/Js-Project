@@ -44,6 +44,10 @@ let bubble = -1; // 감소 개수
 let btn = new Image();
 btn.src = "../img/btn.png";
 
+// 나뭇잎
+let leaf = new Image();
+leaf.src = "../img/leaf.png";
+
 // ---------------------- 문장 출력 -----------------------
 let text, tx, ty, ptime; 
 function printText(text, tx, ty, ptime) {
@@ -131,7 +135,6 @@ function draw(){
     } else if(chghand == 2){ 
         ctx.drawImage(badhand, x- hand_w, y- hand_h, hand_w*2, hand_h*2-70); 
     }
-
     if(chfish == 0){ 
         ctx.drawImage(fish1, 290, 100, 193, 301);
         ctx.drawImage(fish2, 520, 100, 193, 301);
@@ -176,15 +179,19 @@ function draw(){
     ctx.font = "bold 30px sans-serif"; 
     ctx.fillStyle = "#C5EFFF"; 
     ctx.fillText(th + " th", 20, 30); 
+
+    if(eating == 0 && th == 6 || eating == 0 && th == 7){        
+        ctx.drawImage(leaf, 200, 450, 80, 70);
+    }
 }
 
 // 캔버스에 이미지 추가
 function addToCanvas(ctx, image, x, y, sizex, sizey) {
-  let img = new Image;
-  img.src = image;
-  img.onload = function() {
+    let img = new Image;
+    img.src = image;
+    img.onload = function() {
     ctx.drawImage(img, x, y, sizex, sizey);
-  };
+    };
 };
 
 // 한 번에 20씩 이동
@@ -212,6 +219,7 @@ function goBackPage() {
     window.history.back();
 }
 
+
 // canvas 좌표 클릭 위치
 function click() {
     canvas.onclick = function(event){
@@ -219,6 +227,9 @@ function click() {
         const y = event.clientY - ctx.canvas.offsetTop;
         if(x > 1120 && y > 530){
             goBackPage();
+        } else if( 210 < x && x < 280 && y > 450 && y < 520 ){
+            alert("Speed Down");
+            chgSpeed = 100;
         }
     } 
 }
@@ -230,6 +241,8 @@ function speed() {
     if(th == 4){
         chgSpeed = 90;
         alert("Speed Up");
+        
+        
 
        /* check = document.createElement("check");
         check.className = "alert";
@@ -432,15 +445,5 @@ function reset() {
     stop = 0; // 게임 중지 여부
     speed();
 }
-
-// 클릭하면 글 사진 잠깐 보여준 다음에 사라지도록 setInterval 같은 거 사용 
-let leaf = new Image();
-leaf.src = "../img/leaf.png";
-// 현재 레벨이 3일 경우 : 제공하는 힌트
-function hint() {
-    addToCanvas(ctx, "../img/leaf.png", 1030, 290, 40, 40);
-}
-
-
 
 // 단계별 속도 조절, 폴사
