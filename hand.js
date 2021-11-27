@@ -121,17 +121,6 @@ function clearCanvas()
     ctx.beginPath(); // 컨텍스트 리셋
 }
 
-/*
-function setBackground()
-{
-    var image = new Image();
-    image.onload = function() {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    }
-    image.src = " 이미지 경로 ";
-}
-*/
-
 function draw(){
     ctx.drawImage(water, 0, 0, canvas.width, canvas.height); // 배경 출력
     if(chghand == 0) {
@@ -156,7 +145,7 @@ function draw(){
             fish2.src = "../img/fish2.png";
             fish3.src = "../img/fish3.png";
         }, 1000); 
-    } /*else if(chfish == 2){
+    } else if(chfish == 2){
         ctx.drawImage(fish1, 290, 100, 193, 301);
         ctx.drawImage(fish2, 520, 100, 193, 301);
         ctx.drawImage(fish3, 750, 100, 193, 301);
@@ -165,8 +154,8 @@ function draw(){
             fish1.src = "../img/fish1.png"; // 기본으로 다시 되돌리기
             fish2.src = "../img/fish2.png";
             fish3.src = "../img/fish3.png";
-        }, eatSpeed); 
-    }*/
+        }, 100); 
+    }
 
     ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
@@ -351,18 +340,21 @@ function fishMove(){ //물고기 이미지 바꾸기
 }
 
 function eatImg(imgNum){ //먹는 이미지로 변경
+    /*for(let i=0; i<3; i++){
+        if(imgNum == i){
+            chfish = 2; // 먹는 이미지라는 뜻
+            fish1.src = "../img/eatfish.png";
+        }
+    }*/
     if(imgNum==0){
-        //chfish = 2; // 먹는 이미지라는 뜻
-        //fish1.src = "../img/eatfish.png";
-        ctx.drawImage(eatfish, 290, 100, 193, 301);
+        chfish = 2; // 먹는 이미지라는 뜻
+        fish1.src = "../img/eatfish.png";
     }else if(imgNum==1){
-        //chfish = 2; 
-        //fish2.src = "../img/eatfish.png";
-        ctx.drawImage(eatfish2, 520, 100, 193, 301);
+        chfish = 2; 
+        fish2.src = "../img/eatfish.png";
     }else if(imgNum==2){
-        //chfish = 2; 
-        //fish3.src = "../img/eatfish.png";
-        ctx.drawImage(eatfish, 750, 100, 193, 301);
+        chfish = 2; 
+        fish3.src = "../img/eatfish.png";
     }
 }
 
