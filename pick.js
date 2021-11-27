@@ -21,6 +21,6 @@ function movingHand(){
 }
 
 function draw(){
-    ctx.drawImage(back,0,0,1260, 599); // 배경
+    ctx.drawImage(back, 0, 0, canvas.width, canvas.height); // 배경
     ctx.drawImage(hand2, 520, 300, 293, 342); // hand2.png 출력
 }

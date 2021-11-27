@@ -15,6 +15,7 @@ let eatSpeed = 800;
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
 
+
 // 배경, 손 객체 생성
 let water= new Image();
 water.src="../img/water.png";
@@ -120,8 +121,19 @@ function clearCanvas()
     ctx.beginPath(); // 컨텍스트 리셋
 }
 
+/*
+function setBackground()
+{
+    var image = new Image();
+    image.onload = function() {
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    }
+    image.src = " 이미지 경로 ";
+}
+*/
+
 function draw(){
-    ctx.drawImage(water,0,0,1290, 650); // 배경 출력
+    ctx.drawImage(water, 0, 0, canvas.width, canvas.height); // 배경 출력
     if(chghand == 0) {
         ctx.drawImage(hand, x- hand_w, y- hand_h, hand_w*2, hand_h*2); // hand.png 출력
     } else if(chghand == 1){ //손 바꾸기
@@ -221,6 +233,15 @@ function click() {
     } 
 }
 
+// 속도
+function speed() {
+    if(th == 3){
+        baseSpeed =  eatSpeed + 200; 
+    } else if(th == 6){
+        baseSpeed =  eatSpeed + 100;
+    }
+}
+
 
 // ------------- 깜짝 놀란 물고기 -------------------
 
@@ -281,7 +302,7 @@ function keychg(){
 var eating = 0; // 먹고 있는 중
 var maxIndex = 0; 
 var n = Math.floor(Math.random()*6)+5;    //변경횟수변수 -> 2번 랜덤하는 이유
-let baseSpeed = eatSpeed + 300; // 기본으로 돌아오는 속도
+let baseSpeed = eatSpeed + 400; // 기본으로 돌아오는 속도
 let nowEnter = 0; // Enter키를 눌렀는지 여부
 
 //var audio = new Audio("../img/물방울.mp3");
@@ -295,7 +316,7 @@ eatfish2.src="../img/eatfish2.png";
 //밥먹는 횟수 저장 배열
 let sum = new Array(3);
 sum = [0, 0, 0];
-var eatTime = 0;
+var eatTime;
 
 function fishMove(){ //물고기 이미지 바꾸기
     let i, j;
@@ -310,6 +331,7 @@ function fishMove(){ //물고기 이미지 바꾸기
 
         // 기본
         /*setTimeout(() => {
+            //clearTimeout(Time);
             reImg(imgNum);
         }, baseSpeed * i);
         */
@@ -368,6 +390,7 @@ function gameOver() {
             location.href = "clear.html"; 
         }, 1500);
     } else {
+        clearTimeout(eatTime); 
         reset();
         movingHand();
     }
@@ -396,7 +419,7 @@ function reset() {
     max = sum[0]; 
     maxIndex = 0; // 가장 많이 먹은 물고기
     eating = 0;
-    eatSpeed = 800; // 속도는 th에 따라서 다르게 해야 되므로..
+    //speed(); // 속도는 th에 따라서 다르게 해야 되므로..
     baseSpeed = eatSpeed + 300;
     //n = Math.floor(Math.random()*6)+5;
     stop = 0; // 게임 중지 여부
