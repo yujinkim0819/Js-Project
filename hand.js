@@ -11,8 +11,9 @@ let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 let stop = 0; // 만약 bubble이 2가 되면 게임 중지
 let eatSpeed = 800;
-let chgSpeed = 250; // 기본으로 되돌리는 속도
+let chgSpeed = 210; // 기본으로 되돌리는 속도
 let useBonus = 0; // 보너스 사용 여부
+let speedMent = 0; // 멘트 출력
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -190,9 +191,14 @@ function draw(){
         ctx.drawImage(leaf, 200, 450, 80, 70);
     }
 
-    /*if(th == 4 || th == 7){
-        ctx.drawImage(speedUp, 470, 200, 300, 140);
-    }*/
+    if(th == 1 || th == 7){
+        /*speedMent = setInterval(() => {
+            ctx.drawImage(speedUp, 470, 200, 300, 140);
+        });
+        setTimeout(() => {
+            clearInterval(speedMent);
+        }, 100);*/
+    }
 }
 
 // 캔버스에 이미지 추가
@@ -251,18 +257,7 @@ var check;
 function speed() {
     if(th == 4){
         chgSpeed = 90;
-        //alert("Speed Up");
-        
-        
-
-       /* check = document.createElement("check");
-        check.className = "alert";
-        check.innerHTML = "<strong>Speed UP!!</strong>";
-        document.body.append(check); // 비로소 화면에 보임
-
-        setTimeout(() => {
-            check.remove()
-        }, 3000); */
+        alert("Speed Up");
 
     } else if(th == 6){
         chgSpeed = 40;
@@ -322,10 +317,6 @@ function keychg(){
         gameOver(); // 게임 오버
         end = 1; // 추가
     }, 1000);   
-     
-    /*setTimeout(() => {
-        clearInterval(right);
-    }, 700);*/
 }
 
 
@@ -360,12 +351,6 @@ function fishMove(){ //물고기 이미지 바꾸기
             eatImg(imgNum);
         }, eatSpeed * i);
 
-        // 기본
-        /*setTimeout(() => {
-            //clearTimeout(Time);
-            reImg(imgNum);
-        }, baseSpeed * i);
-        */
         for(let i=0; i<3; i++){
             if(imgNum == i){
                 sum[i]++;
@@ -399,19 +384,6 @@ function eatImg(imgNum){ //먹는 이미지로 변경
         fish3.src = "../img/eatfish.png";
     }
 }
-
-/*
-function reImg(imgNum){ //기본 이미지로 변경
-    if(imgNum==0){
-        ctx.drawImage(fish1, 290, 100, 193, 301);
-    }else if(imgNum==1){
-        ctx.drawImage(fish2, 520, 100, 193, 301);
-    }else if(imgNum==2){
-        ctx.drawImage(fish3, 750, 100, 193, 301);
-    }
-}
-*/
-
 
 // ---------------------- 게임 over ----------------------
 function gameOver() {
