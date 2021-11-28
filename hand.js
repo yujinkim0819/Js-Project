@@ -12,6 +12,7 @@ let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 let stop = 0; // 만약 bubble이 2가 되면 게임 중지
 let eatSpeed = 800;
 let chgSpeed = 250; // 기본으로 되돌리는 속도
+let useBonus = 0; // 보너스 사용 여부
 
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
@@ -180,7 +181,7 @@ function draw(){
     ctx.fillStyle = "#C5EFFF"; 
     ctx.fillText(th + " th", 20, 30); 
 
-    if(eating == 0 && th == 6 || eating == 0 && th == 7){        
+    if(eating == 0 && th == 6 && useBonus == 0 || eating == 0 && th == 7 && useBonus == 0){ 
         ctx.drawImage(leaf, 200, 450, 80, 70);
     }
 }
@@ -227,8 +228,9 @@ function click() {
         const y = event.clientY - ctx.canvas.offsetTop;
         if(x > 1120 && y > 530){
             goBackPage();
-        } else if( 210 < x && x < 280 && y > 450 && y < 520 ){
+        } else if(useBonus == 0 && 210 < x && x < 280 && y > 450 && y < 520 ){
             alert("Speed Down");
+            useBonus = 1;       
             chgSpeed = 100;
         }
     } 
