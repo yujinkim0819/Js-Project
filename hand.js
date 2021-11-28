@@ -27,6 +27,8 @@ let goodhand= new Image();
 goodhand.src="../img/good.png";
 let badhand= new Image();
 badhand.src="../img/bad.png";
+let cryfish = new Image();
+cryfish.src = "../img/cry.png";
 
 // 물고기 객체 생성
 let fish1= new Image();
@@ -48,6 +50,9 @@ btn.src = "../img/btn.png";
 // 나뭇잎
 let leaf = new Image();
 leaf.src = "../img/leaf.png";
+let speedUp = new Image();
+speedUp.src = "../img/speedUp.png";
+
 
 // ---------------------- 문장 출력 -----------------------
 let text, tx, ty, ptime; 
@@ -90,7 +95,7 @@ function replay() {
     setTimeout(() => {
         eating = 0;
         printText("물고기를 선택하세요", 210, 240, 800);
-    }, baseSpeed * n + 200); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
+    }, baseSpeed * n); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
 
 
@@ -184,6 +189,10 @@ function draw(){
     if(eating == 0 && th == 6 && useBonus == 0 || eating == 0 && th == 7 && useBonus == 0){ 
         ctx.drawImage(leaf, 200, 450, 80, 70);
     }
+
+    /*if(th == 4 || th == 7){
+        ctx.drawImage(speedUp, 470, 200, 300, 140);
+    }*/
 }
 
 // 캔버스에 이미지 추가
@@ -242,7 +251,7 @@ var check;
 function speed() {
     if(th == 4){
         chgSpeed = 90;
-        alert("Speed Up");
+        //alert("Speed Up");
         
         
 
@@ -279,26 +288,29 @@ function keychg(){
     print(); 
     
     if((x-hand_w) + dx > 310 && x+dx < 520){
-        fish1.src="../img/surprised.png";
         if(maxIndex == 0){
+            fish1.src="../img/surprised.png";
             chghand = 1;
         } else {
+            fish1.src="../img/cry.png";
             chghand = 2;
             bubble++;
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
-        fish2.src="../img/surprised.png";
         if(maxIndex == 1){
+            fish2.src="../img/surprised.png";
             chghand = 1;
         } else {
+            fish2.src="../img/cry.png";
             chghand = 2;
             bubble++;
         }
     } else {
-        fish3.src="../img/surprised.png";
         if(maxIndex == 2){
+            fish3.src="../img/surprised.png";
             chghand = 1;
         } else {
+            fish3.src="../img/cry.png";
             chghand = 2;
             bubble++;
         }
