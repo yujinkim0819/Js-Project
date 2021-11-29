@@ -2,15 +2,60 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="./pick.js" defer></script>
+    <script src="../js/test4.js" defer></script>
     <style>
     body{
         background-image:url("../img/back.png");
         background-size: cover;
     }
+    button{
+        float: left;
+        width: 140px;
+        height: 50px;
+        margin-right: 20px;
+        font-weight: bolder;
+        border: 4px solid #80DBFC;
+        background-color: #C5EFFF;
+        color:#80DBFC; 
+        padding: 5px;
+        margin-top: 27px;
+        border-radius: 30px 30px 30px 30px;
+        font-size : 20px;
+    }
+    button:hover{
+        color: #C5EFFF;
+        background-color: #80DBFC;
+    }
+    div{
+        margin: auto;
+        margin-top: 55px;
+        margin-left: 1070px;
+    }
     </style>
+    <script>
+        function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        }
+        
+        function dragOver(ev) {
+        ev.preventDefault(); // 요소이동불가 기본동작을 차단 (= 드롭 허용)
+        }
+
+        function drop(ev) {
+        ev.preventDefault(); // 링크로 열리는 기본동작을 차단
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
 </head>
-<body onload="movingHand()" style="overflow-y: hidden; overflow-x: hidden;">
-    <canvas width="1290" height="700;" id="c1" ></canvas>
-</body>
+    <body>
+        <img id="ha" src="../img/hand2.png" ondrop="drop(event)" ondragover="dragOver(event)"
+            style="display: block; margin: 0 auto;  width:293px; height:342px;">
+        <img id="hz" src="../img/feed.png" draggable="true" ondragstart="drag(event)">
+        <div>
+            <a href="handMove.html">
+                <button onclick="play()">다음</button> 
+            </a>
+        </div>
+    </body>
 </html>
