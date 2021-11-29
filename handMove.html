@@ -18,9 +18,24 @@
             border-radius: 30px 30px 30px 30px;
             margin-left: 1125px;
         }
+        .notification-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px 10px 10px 10px ;
+            padding: 15px 10px;
+            position: absolute;
+            top : -85px; 
+            margin-left: 530px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .notification-container.show {
+            transform: translateY(+85px);
+        }
         </style>
     </head>
     <body onload="movingHand()" onkeydown="keydown()" onkeyup="keyup()" style="overflow-y: hidden; overflow-x: hidden;"> <!-- onload="keychg()" -->
         <canvas id="c1" width="1290" height="700;"></canvas> 
+        <div class="notification-container" id="notification-container">
+            <p><strong>물고기를 선택하세요</strong></p>
+        </div>
     </body>
 </html>

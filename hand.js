@@ -11,7 +11,7 @@ let replace; // 한 게임 당 3번 씩 반복
 let end = 0; // 한 번 게임이 돌았는지 안돌았는지
 let stop = 0; // 만약 bubble이 2가 되면 게임 중지
 let eatSpeed = 800;
-let chgSpeed = 210; // 기본으로 되돌리는 속도
+let chgSpeed = 200; // 기본으로 되돌리는 속도
 let useBonus = 0; // 보너스 사용 여부
 let speedMent = 0; // 멘트 출력
 
@@ -53,6 +53,7 @@ let leaf = new Image();
 leaf.src = "../img/leaf.png";
 let speedUp = new Image();
 speedUp.src = "../img/speedUp.png";
+let leafclick = 0;
 
 
 // ---------------------- 문장 출력 -----------------------
@@ -95,7 +96,7 @@ function replay() {
     
     setTimeout(() => {
         eating = 0;
-        printText("물고기를 선택하세요", 210, 240, 800);
+        showNotification();
     }, baseSpeed * n); // 물고기가 기본으로 돌아오기까지 걸리는 시간 * n마리, 비동기적 
 }
 
@@ -133,6 +134,7 @@ function clearCanvas()
     ctx.beginPath(); // 컨텍스트 리셋
 }
 
+let speedPrint = 0;
 function draw(){
     ctx.drawImage(water, 0, 0, canvas.width, canvas.height); // 배경 출력
     if(chghand == 0) {
@@ -189,15 +191,28 @@ function draw(){
 
     if(eating == 0 && th == 6 && useBonus == 0 || eating == 0 && th == 7 && useBonus == 0){ 
         ctx.drawImage(leaf, 200, 450, 80, 70);
-    }
+    }   
 
-    if(th == 1 || th == 7){
-        /*speedMent = setInterval(() => {
-            ctx.drawImage(speedUp, 470, 200, 300, 140);
-        });
-        setTimeout(() => {
+    speedMent = setInterval(() => {
+        if(th == 4 && speedPrint == 0 && eating == 0 || th == 7 && speedPrint == 0 && eating == 0 && useBonus == 0){
+            ctx.drawImage(speedUp, 5, 30, 300, 140);
+        } else if(bubble == 2){
             clearInterval(speedMent);
-        }, 100);*/
+        } else if(useBonus == 1 && eating == 0){
+            ctx.drawImage(speedDown, 5, 30, 300, 140);
+            setTimeout(() => {
+                useBonus = 3;
+            }, 1500);
+        } else {
+            clearInterval(speedMent);
+        }
+    });
+
+    if(th == 5 || th == 8){
+        speedPrint = 0;
+    }
+    if(useBonus == 1 && th > 6){
+        chgSpeed = 40;
     }
 }
 
@@ -206,7 +221,7 @@ function addToCanvas(ctx, image, x, y, sizex, sizey) {
     let img = new Image;
     img.src = image;
     img.onload = function() {
-    ctx.drawImage(img, x, y, sizex, sizey);
+        ctx.drawImage(img, x, y, sizex, sizey);
     };
 };
 
@@ -237,6 +252,8 @@ function goBackPage() {
 
 
 // canvas 좌표 클릭 위치
+let speedDown = new Image();
+speedDown.src = "../img/speedDown.png"
 function click() {
     canvas.onclick = function(event){
         const x = event.clientX - ctx.canvas.offsetLeft; 
@@ -244,7 +261,8 @@ function click() {
         if(x > 1120 && y > 530){
             goBackPage();
         } else if(useBonus == 0 && 210 < x && x < 280 && y > 450 && y < 520 ){
-            alert("Speed Down");
+            //alert("Speed Down");
+            //addToCanvas(ctx, speedDown, 5, 30, 300, 140);
             useBonus = 1;       
             chgSpeed = 100;
         }
@@ -257,11 +275,8 @@ var check;
 function speed() {
     if(th == 4){
         chgSpeed = 90;
-        alert("Speed Up");
-
     } else if(th == 6){
         chgSpeed = 40;
-        alert("Speed Up");
     }
 }
 
@@ -344,6 +359,9 @@ function fishMove(){ //물고기 이미지 바꾸기
     let i, j;
     for(i=1; i<=n; i++){
         eating = 1;
+        if(th == 4 || th == 7){
+            speedPrint = 1;
+        }
         let imgNum = Math.floor(Math.random()*3); //바뀔 물고기 번호 랜덤값 생성
         
         // 먹는 이미지
@@ -432,4 +450,11 @@ function reset() {
     speed();
 }
 
-// 단계별 속도 조절, 폴사
+// 멘트
+const notification = document.getElementById('notification-container');
+const showNotification = () => {
+    notification.classList.add('show')
+    setTimeout(() => {
+      notification.classList.remove('show')
+    }, 1500)
+  }

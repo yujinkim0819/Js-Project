@@ -38,16 +38,50 @@
                 margin-left: 380px;
             }
         </style>
+        
+        <!--<audio src="../img/audio_file.mp3">
+
+        </audio>
+        <script>
+            var audio = new Audio("../img/icewater.mp3");
+            audio.loop = true;
+            audio.volume = 0.2;
+            audio.play();
+            /*let audio = new Audio();
+            audio.src = "../img/icewater.mp3";
+            audio.loop = true;
+            audio.play();*/
+        </script>-->
     </head>
     <body>
         <img src="../img/title.png" id="title">
         <div>
             <a href="handMove.html">
-                <button>게임 시작</button> 
+                <button onclick="play()">게임 시작</button> 
             </a>
             <a href="gameRole.html">
                 <button>게임 방법</button> 
             </a>
         </div>
     </body>
+    <!--<script>
+        document.querySelector(".btn1").addEventListener("click", function () {
+        var audio1 = new Audio("icewater.mp3");
+        audio1.loop = true; // 반복재생
+        audio1.volume = 0.3; // 음량 설정
+        audio1.play(); // icewater.mp3 재생
+        });
+    </script>-->
+    <audio id='audio_play' src='../img/icewater.mp3'></audio> 
+    <script type="text/javascript"> 
+        function play() { 
+            var audio = document.getElementById('audio_play'); 
+            if (audio.paused) { 
+                audio.play(); 
+            }else{ 
+                audio.pause(); 
+                audio.currentTime = 0 
+            } 
+        } 
+    </script>
 </html>
