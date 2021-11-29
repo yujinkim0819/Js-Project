@@ -293,10 +293,10 @@ function keychg(){
         }
     } else if((x-hand_w) + dx > 520 && x+dx < 750){
         if(maxIndex == 1){
-            fish2.src="../img/surprised.png";
+            fish2.src="../img/surprised2.png";
             chghand = 1;
         } else {
-            fish2.src="../img/cry.png";
+            fish2.src="../img/cry2.png";
             chghand = 2;
             bubble++;
         }
@@ -378,7 +378,7 @@ function eatImg(imgNum){ //먹는 이미지로 변경
         fish1.src = "../img/eatfish.png";
     }else if(imgNum==1){
         chfish = 2; 
-        fish2.src = "../img/eatfish.png";
+        fish2.src = "../img/eatfish2.png";
     }else if(imgNum==2){
         chfish = 2; 
         fish3.src = "../img/eatfish.png";
