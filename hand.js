@@ -245,11 +245,11 @@ function keyup(){
         case 39: dx=0; break; // 오
     }
 }
-    
+
+// 페이지 뒤로 이동
 function goBackPage() {
     window.history.back();
 }
-
 
 // canvas 좌표 클릭 위치
 let speedDown = new Image();
@@ -259,10 +259,8 @@ function click() {
         const x = event.clientX - ctx.canvas.offsetLeft; 
         const y = event.clientY - ctx.canvas.offsetTop;
         if(x > 1120 && y > 530){
-            goBackPage();
+            location.href  ="Menu.html";
         } else if(useBonus == 0 && 210 < x && x < 280 && y > 450 && y < 520 ){
-            //alert("Speed Down");
-            //addToCanvas(ctx, speedDown, 5, 30, 300, 140);
             useBonus = 1;       
             chgSpeed = 100;
         }
