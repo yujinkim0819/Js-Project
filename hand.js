@@ -419,7 +419,6 @@ function gameOver() {
 }
 
 
-
 // ---------------- 많이 먹은 물고기 공개 --------------------
 function maxEatFish() {
     for(let i=0; i<3; i++){
