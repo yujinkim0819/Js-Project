@@ -102,7 +102,6 @@ feed2.ondragstart = function() {
   return false;
 };
 
-
 //밥 3
 feed3.onmousedown = function(event) {
 
