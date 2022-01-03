@@ -18,7 +18,6 @@ let speedMent = 0; // 멘트 출력
 let canvas= document.getElementById('c1');
 let ctx= canvas.getContext('2d'); // 화가 객체
 
-
 // 배경, 손 객체 생성
 let water= new Image();
 water.src="../img/water.png";
