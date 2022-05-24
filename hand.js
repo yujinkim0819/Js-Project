@@ -169,14 +169,15 @@ function draw(){
         }, chgSpeed); 
     }
 
-    ctx.drawImage(btn, 1120, 500, 100, 100);
+    ctx.drawImage(btn, 1500, 700, 150, 150); // 메인화면으로 돌아가는 버튼
+    //ctx.drawImage(btn, 1120, 500, 100, 100);
     for(let i = 0; i<3; i++){
-        ctx.drawImage(bubble1, 1120 + (i*45), 10, 40, 40); // 비눗방울 출력
+        ctx.drawImage(bubble1, 1550 + (i*45), 20, 40, 40); // 비눗방울 출력
         if(bubble != -1 && bubble <= 2){
             let pop = new Image();
             pop.src="../img/bubble3.png";
             for(let j=0; j<=bubble; j++){
-                ctx.drawImage(pop, 1120 + (j*45), 10, 40, 40);
+                ctx.drawImage(pop, 1550 + (j*45), 20, 40, 40);
             }
             if(bubble == 2){
                 stop = 1;
@@ -257,7 +258,7 @@ function click() {
     canvas.onclick = function(event){
         const x = event.clientX - ctx.canvas.offsetLeft; 
         const y = event.clientY - ctx.canvas.offsetTop;
-        if(x > 1120 && y > 530){
+        if(x > 1500 && y > 730){
             location.href  ="Menu.html";
         } else if(useBonus == 0 && 210 < x && x < 280 && y > 450 && y < 520 ){
             useBonus = 1;       
@@ -265,6 +266,8 @@ function click() {
         }
     } 
 }
+//ctx.drawImage(btn, 1500, 700, 150, 150);
+//ctx.drawImage(btn, 1120, 500, 100, 100);
 
 
 // 속도
